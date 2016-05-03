@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html ng-app="bookApp">
+  <head>
+    <meta charset="utf-8">
+    <title>Book Tracker My Library Page app</title>
+
+    <!-- Libraries/Frameworks -->
+    <script src="vendors/angular/angular.min.js"></script>
+    <script src="vendors/angular-route/angular-route.min.js"></script>
+    <link rel="stylesheet" href="vendors/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="vendors/bootstrap/dist/css/bootstrap.min.css" />
+    <!--Look for base link-->
+    <base href="/" />
+
+    <!-- Development Files -->
+    <script src="assets/scripts/client.min.js"></script>
+    <link rel="stylesheet" href="assets/styles/style.css" />
+
+  </head>
+  <body class="container-fluid">
+    <header>
+      <div>
+        <h3>My Book Tracker</h3>
+        <ul>
+          <li>
+            <a href="/search" title="Add to Library"><i class="fa fa-search"></i><span class="nav-label">Add to Library</span></a>
+          </li>
+          <li>
+            <a href="/"><i class="fa fa-university"></i><span class="nav-label">My Library</span></a>
+          </li>
+          <li>
+            <a href="/shelves"><i class="fa fa-book"></i><span class="nav-label">My Shelves</span></a>
+          </li>
+          <li>
+            <a href="/locations"><i class="fa fa-map-o"></i><span class="nav-label">Book Locations</span></a>
+          </li>
+          <li>
+            <a href="/borrowed"><i class="fa fa-bold"></i><span class="nav-label">Borrowed</span></a>
+          </li>
+          <li>
+            <a href="/lent"><i class="fa fa-user"></i><span class="nav-label">Lent</span></a>
+          </li>
+          <li>
+            <a href="/favorites"><i class="fa fa-star"></i><span class="nav-label">Favorites</span></a>
+          </li>
+          <li>
+            <a href="/wishlist"><i class="fa fa-gift"></i><span class="nav-label">Wish List</span></a>
+          </li>
+          <li>
+            <a href="/faq"><i class="fa fa-question"></i><span class="nav-label">Help/FAQ</span></a>
+          </li>
+        </ul>
+      </div>
+    </header> <!--header-->
+
+    <div ng-view>
+    </div>
+    <footer>
+      <div>
+        <i class="fa fa-copyright"></i>
+        <i class="fa fa-github"></i>
+        <i class="fa fa-linkedin"></i>
+      </div>
+    </footer>
+  </body> <!--body-->
+</html>
