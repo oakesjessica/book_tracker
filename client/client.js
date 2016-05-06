@@ -5,12 +5,22 @@ var app = angular.module("bookApp", ["ngRoute"]);
 /////////////////////////////////////////////////
 app.config(["$routeProvider", "$locationProvider", function($routeProvider, $locationProvider) {
   $routeProvider
+    .when("/login", {
+      templateUrl: "views/login.html",
+      controller: "LoginController",
+      controllerAs: "log"
+    })
+    .when("/register", {
+      templateUrl: "views/register.html",
+      controller: "RegisterController",
+      controllerAs: "reg"
+    })
     .when("/search", {
       templateUrl: "views/search.html",
       controller: "SearchController",
       controllerAs: "add"
     })  //  Search page
-    .when("/", {
+    .when("/library", {
       templateUrl: "views/library.html",
       controller: "LibraryController",
       controllerAs: "lib"
@@ -58,56 +68,118 @@ app.config(["$routeProvider", "$locationProvider", function($routeProvider, $loc
 /////////////////////////////////////////////////
                 /*Controllers*/
 /////////////////////////////////////////////////
+app.controller("MainController", ["UserService", function(UserService) {
+  var vm = this;
+
+  vm.loginStatusData = UserService.data;
+  console.log(vm.loginStatus);
+
+}]);
+
+app.controller("LoginController", ["UserService", function(UserService) {
+  var vm = this;
+
+  vm.logInfo = {};
+  vm.login = function() {
+    console.log(vm.logInfo);
+    UserService.loginUser(vm.logInfo);
+  };
+}]); //  LoginController
+
+app.controller("RegisterController", ["UserService", function(UserService) {
+  var vm = this;
+
+  vm.newUser = {};
+  vm.regUser = function() {
+    console.log(vm.newUser);
+    UserService.registerNewUser(vm.newUser);
+    vm.newUser = {};
+  };
+}]); //  RegisterController
+
 app.controller("SearchController", function() {
   var vm = this;
-  vm.searchTypes = ["Title", "Author", "ISBN"];
-  vm.message = "Search List";
-
-  vm.search = {};
-  vm.Search = function() {
-    console.log(vm.search);
-    vm.search = {};
-  };
+  vm.page_title = "Search List";
 }); //  SearchController
 
 app.controller("LibraryController", function() {
   var vm = this;
-
-  vm.message = "Library List";
+  vm.page_title = "Library List";
 }); //  LibraryController
 
 app.controller("ShelvesController", function() {
   var vm = this;
-  vm.message = "Shelf List";
+  vm.page_title = "Shelf List";
 }); //  ShelvesController
 
 app.controller("LocationController", function() {
   var vm = this;
-  vm.message = "Locations List";
+  vm.page_title = "Locations List";
 }); //  LocationController
 
 app.controller("BorrowController", function() {
   var vm = this;
-  vm.message = "Borrowed List";
+  vm.page_title = "Books I've Borrowed";
 }); //  BorrowedController
 
-app.controller("LentController", ["FetchLentBooks", function(FetchLentBooks) {
+app.controller("LentController", function() {
   var vm = this;
-
-  vm.message = "Lent List";
-}]); //  LentController
+  vm.page_title = "Books I've Lent Out";
+}); //  LentController
 
 app.controller("FavoriteController", function() {
   var vm = this;
-  vm.message = "Favorites List";
+  vm.page_title = "Favorites List";
 }); //  FavoriteController
 
 app.controller("WishController", function() {
   var vm = this;
-  vm.message = "Wish List";
+  vm.page_title = "Wish List";
 }); //  WishController
 
 app.controller("FaqController", function() {
   var vm = this;
-  vm.message = "FAQ List";
+  vm.page_title = "FAQ List";
 }); //  FAQController
+
+/////////////////////////////////////////////////
+                /*Factories*/
+/////////////////////////////////////////////////
+app.factory("UserService", ["$http", "$location", function($http, $location) {
+  var userData = [];
+  var data = {};
+
+  registerNewUser = function(userInfo) {
+    console.log("newuser", userInfo);
+    $http.post("/register", userInfo).then(function(serverResponse) {
+      console.log(serverResponse);
+    });
+  };  //  registerNewUser
+
+  loginUser = function(userInfo) {
+    console.log("logging in", userInfo);
+    $http.post("/", userInfo).then(function(serverResponse) {
+      console.log(serverResponse);
+      if (serverResponse.status === 200) {
+        data.login = true;
+        $location.path("/search");
+      } else {
+        //  error message
+        data.login = false;
+      }
+    });
+  };  //  loginUser
+
+  return {
+    key : {title : "value"},
+    userData : userData,
+    registerNewUser : registerNewUser,
+    loginUser : loginUser,
+    data : data
+  };
+
+}]);  //  app.factory - UserService
+
+app.factory("LoginService", ["$http", function($http) {
+
+}]);  //  app.factory - LoginService

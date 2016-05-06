@@ -1,0 +1,19 @@
+<h1>REGISTER PORTAL</h1>
+<form ng-submit="reg.regUser()">
+  <div>
+    <input type="text" name="firstname" id="firstname" placeholder="First Name"ng-model="reg.newUser.firstName"/>
+  </div>
+  <div>
+    <input type="text" name="lastname" id="lastname" placeholder="Last Name"ng-model="reg.newUser.lastName"/>
+  </div>
+  <div>
+    <input type="text" name="email" id="email" placeholder="Enter your Email Address" ng-model="reg.newUser.email"/>
+  </div>
+  <div>
+    <input type="password" name="password" id="password" placeholder="Enter a password" ng-model="reg.newUser.password"/>
+  </div>
+  <div>
+    <input type="submit" value="Register" class="btn btn-info"/>
+  </div>
+
+</form>

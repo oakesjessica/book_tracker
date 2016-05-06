@@ -1,0 +1,13 @@
+<h1>LOGIN PORTAL</h1>
+<form ng-submit = "log.login()">
+  <div>
+    <input type="text" name="email" id="email" placeholder="Enter Email" ng-model="log.logInfo.email"/>
+  </div>
+  <div>
+    <input type="password" name="password" id="password" placeholder="Enter Password" ng-model="log.logInfo.password"/>
+  </div>
+  <div>
+    <input type="submit" class="btn btn-med btn-success"/>
+    <a href="/register">Register</a>
+  </div>
+</form>
