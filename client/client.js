@@ -132,10 +132,16 @@ app.controller("FavoriteController", function() {
   vm.page_title = "Favorites List";
 }); //  FavoriteController
 
-app.controller("WishController", function() {
+app.controller("WishController", ["BookService", function(BookService) {
   var vm = this;
   vm.page_title = "Wish List";
-}); //  WishController
+
+  vm.wishlist = BookService.data;
+
+  BookService.getWishlist();
+
+  console.log(vm.wishlist);
+}]); //  WishController
 
 app.controller("FaqController", function() {
   var vm = this;
@@ -183,3 +189,21 @@ app.factory("UserService", ["$http", "$location", function($http, $location) {
 app.factory("LoginService", ["$http", function($http) {
 
 }]);  //  app.factory - LoginService
+
+app.factory("BookService", ["$http", function($http) {
+
+  var data = [];
+
+  var getWishlist = function() {
+    $http.get("/wishlist").then(function(serverResponse) {
+      console.log(serverResponse);
+      angular.copy(serverResponse, data);
+      console.log(data);
+    });
+  };
+
+  return {
+    key : {title : "value"},
+    getWishlist : getWishlist
+  };
+}]);
