@@ -132,7 +132,7 @@ app.controller("FavoriteController", function() {
   vm.page_title = "Favorites List";
 }); //  FavoriteController
 
-app.controller("WishController", ["BookService", function(BookService) {
+app.controller("WishController", ["BookService", "UserService", function(BookService, UserService) {
   var vm = this;
   vm.page_title = "Wish List";
 
@@ -176,19 +176,23 @@ app.factory("UserService", ["$http", "$location", function($http, $location) {
     });
   };  //  loginUser
 
+  logoutUser = function() {
+    console.log("logging out")
+    $http.get("/logout").then(function(serverResponse) {
+      console.log(serverResponse):
+    })
+  };
+
   return {
     key : {title : "value"},
     userData : userData,
     registerNewUser : registerNewUser,
     loginUser : loginUser,
+    logoutUser : logoutUser,
     data : data
   };
 
 }]);  //  app.factory - UserService
-
-app.factory("LoginService", ["$http", function($http) {
-
-}]);  //  app.factory - LoginService
 
 app.factory("BookService", ["$http", function($http) {
 
