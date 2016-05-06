@@ -17,49 +17,146 @@
     <link rel="stylesheet" href="assets/styles/style.css" />
 
   </head>
-  <body class="container-fluid">
+  <body class="container-fluid" ng-controller="MainController as main">
     <header>
-      <div>
-        <h3>My Book Tracker</h3>
-        <ul>
-          <li>
-            <a href="/search" title="Add to Library"><i class="fa fa-search"></i><span class="nav-label">Add to Library</span></a>
-          </li>
-          <li>
-            <a href="/"><i class="fa fa-university"></i><span class="nav-label">My Library</span></a>
-          </li>
-          <li>
-            <a href="/shelves"><i class="fa fa-book"></i><span class="nav-label">My Shelves</span></a>
-          </li>
-          <li>
-            <a href="/locations"><i class="fa fa-map-o"></i><span class="nav-label">Book Locations</span></a>
-          </li>
-          <li>
-            <a href="/borrowed"><i class="fa fa-bold"></i><span class="nav-label">Borrowed</span></a>
-          </li>
-          <li>
-            <a href="/lent"><i class="fa fa-user"></i><span class="nav-label">Lent</span></a>
-          </li>
-          <li>
-            <a href="/favorites"><i class="fa fa-star"></i><span class="nav-label">Favorites</span></a>
-          </li>
-          <li>
-            <a href="/wishlist"><i class="fa fa-gift"></i><span class="nav-label">Wish List</span></a>
-          </li>
-          <li>
-            <a href="/faq"><i class="fa fa-question"></i><span class="nav-label">Help/FAQ</span></a>
-          </li>
-        </ul>
-      </div>
-    </header> <!--header-->
+      <nav class="navbar">
+        <div class="navbar-header">
+          <h3>Book Tracker</h3>
+          <ul class="nav">
+            <li title="Add to Library" aria-label="Search books to add to library">
+              <a href="/search">
+                <p class="p-nav">
+                  <i class="fa fa-lg fa-nav fa-search"></i>
+                </p>
+                <p class="p-nav" ng-hide="minimized">
+                  Add to Library
+                </p>
+              </a>
+            </li>
+            <li title="My Library" aria-label="List of all books excluding wishlist-only items">
+              <a href="/library">
+                <p class="p-nav">
+                  <i class="fa fa-lg fa-nav fa-university"></i>
+                </p>
+                <p class="p-nav" ng-hide="minimized">
+                  My Library
+                </p>
+              </a>
+            </li>
+            <li title="My Shelves" aria-label="Books categorized by shelves">
+              <a href="/shelves">
+                <p class="p-nav">
+                  <i class="fa fa-lg fa-nav fa-book"></i>
+                </p>
+                <p class="p-nav" ng-hide="minimized">
+                  My Shelves
+                </p>
+              </a>
+            </li>
+            <li title="Book Locations" aria-label="Books categorized by locations">
+              <a href="/locations">
+                <p class="p-nav">
+                  <i class="fa fa-lg fa-nav fa-map-o"></i>
+                </p>
+                <p class="p-nav" ng-hide="minimized">
+                  Locations
+                </p>
+              </a>
+            </li>
+            <li>
+              <a href="/borrowed" title="Borrowed" aria-label="All books borrowed">
+                <p class="p-nav">
+                  <i class="fa fa-lg fa-nav fa-bold"></i>
+                </p>
+                <p class="p-nav" ng-hide="minimized">
+                  Borrowed
+                </p>
+              </a>
+            </li>
+            <li>
+              <a href="/lent" title="Lent" aria-label="All books lent">
+                <p class="p-nav">
+                  <i class="fa fa-lg fa-nav fa-user"></i>
+                </p>
+                <p class="p-nav" ng-hide="minimized">
+                  Lent
+                </p>
+              </a>
+            </li>
+            <li title="Favorites" aria-label="List of all books marked favorite">
+              <a href="/favorites">
+                <p class="p-nav">
+                  <i class="fa fa-lg fa-nav fa-star"></i>
+                </p>
+                <p class="p-nav" ng-hide="minimized">
+                  Favorites
+                </p>
+              </a>
+            </li>
+            <li title="Wish List" aria-label="Books on the Wish List">
+              <a href="/wishlist">
+                <p class="p-nav">
+                  <i class="fa fa-lg fa-nav fa-gift"></i>
+                </p>
+                <p class="p-nav" ng-hide="minimized">
+                  Wish List
+                </p>
+              </a>
+            </li>
+            <li title="Help/FAQ" aria-label="Help/Frequently Asked Questions Page">
+              <a href="/faq">
+                <p class="p-nav">
+                  <i class="fa fa-lg fa-nav fa-question"></i>
+                </p>
+                <p class="p-nav" ng-hide="minimized">
+                  Help/FAQ
+                </p>
+              </a>
+            </li>
+            <li>
+              <a href="" ng-hide="minimized" ng-click="minimized = true">
+                <p class="p-nav">
+                  <i class="fa fa-lg fa-nav fa-angle-double-up" title="Minimize" aria-label="Minimize sidebar"></i>
+                </p>
+                <p class="p-nav">
+                  Minimize
+                </p>
+              </a>
+              <a href="" ng-show="minimized" ng-click="minimized = false" title="Expand" aria-label="Expand sidebar">
+                <p class="p-nav">
+                  <i class="fa fa-lg fa-nav fa-angle-double-down" title="Expand" aria-label="Expand sidebar"></i>
+                </p>
+              </a>
+            </li>
+            <li>
+              <a ng-hide="main.loginStatusData.login" href="/login">
+                <p class="p-nav">
+                  <i class="fa fa-lg fa-nav fa-sign-in" title="Login" aria-label="Login/Register to account for full access" ></i>
+                </p>
+                <p class="p-nav" ng-hide="minimized" title="Login/Register" aria-label="Login/Register to account for full access">
+                  Login
+                </p>
+              </a>
 
+              <!-- Logged In -->
+              <a ng-show="main.loginStatusData.login">
+                <p class="p-nav">
+                  <i class="fa fa-lg fa-nav fa-sign-out" title="Log Out" aria-label="Logout of account"></i>
+                </p>
+                <p class="p-nav" ng-hide="minimized" title="Log Out" aria-label="Logout of account">
+                  Logout
+                </p>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
     <div ng-view>
     </div>
     <footer>
       <div>
-        <i class="fa fa-copyright"></i>
-        <i class="fa fa-github"></i>
-        <i class="fa fa-linkedin"></i>
+        <i class="fa fa-copyright" title="Copyright"></i>
       </div>
     </footer>
   </body> <!--body-->
