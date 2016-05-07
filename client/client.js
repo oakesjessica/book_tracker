@@ -102,10 +102,16 @@ app.controller("SearchController", function() {
   vm.page_title = "Search List";
 }); //  SearchController
 
-app.controller("LibraryController", function() {
+app.controller("LibraryController", ["BookService", function(BookService) {
   var vm = this;
   vm.page_title = "Library List";
-}); //  LibraryController
+  vm.libraryList = BookService.data;
+
+  BookService.getLibrary();
+
+  console.log("lib", vm.libraryList);
+
+}]); //  LibraryController
 
 app.controller("ShelvesController", function() {
   var vm = this;
@@ -117,10 +123,16 @@ app.controller("LocationController", function() {
   vm.page_title = "Locations List";
 }); //  LocationController
 
-app.controller("BorrowController", function() {
+app.controller("BorrowController", ["BookService", function(BookService) {
   var vm = this;
   vm.page_title = "Books I've Borrowed";
-}); //  BorrowedController
+
+  vm.borrowedList = BookService.data;
+
+  BookService.getBorrowedList();
+
+  console.log("list", vm.borrowedList);
+}]); //  BorrowedController
 
 app.controller("LentController", function() {
   var vm = this;
@@ -136,11 +148,15 @@ app.controller("WishController", ["BookService", "UserService", function(BookSer
   var vm = this;
   vm.page_title = "Wish List";
 
-  vm.wishlist = BookService.data;
+  vm.wishList = BookService.data;
 
   BookService.getWishlist();
 
-  console.log(vm.wishlist);
+  console.log("wishcontroller", vm.wishList);
+
+  vm.removeWish = function(book) {
+    console.log(book);
+  };
 }]); //  WishController
 
 app.controller("FaqController", function() {
@@ -176,38 +192,64 @@ app.factory("UserService", ["$http", "$location", function($http, $location) {
     });
   };  //  loginUser
 
-  logoutUser = function() {
-    console.log("logging out")
-    $http.get("/logout").then(function(serverResponse) {
-      console.log(serverResponse):
-    })
-  };
-
   return {
     key : {title : "value"},
     userData : userData,
     registerNewUser : registerNewUser,
     loginUser : loginUser,
-    logoutUser : logoutUser,
     data : data
   };
 
 }]);  //  app.factory - UserService
 
 app.factory("BookService", ["$http", function($http) {
-
   var data = [];
+  var currentLentActivity = [];
+  var pastLActivity = [];
+
+  var getLibrary = function() {
+    $http.get("/library").then(function(serverResponse) {
+      console.log(serverResponse.data);
+      angular.copy(serverResponse.data, data);
+    });
+  };
 
   var getWishlist = function() {
     $http.get("/wishlist").then(function(serverResponse) {
-      console.log(serverResponse);
-      angular.copy(serverResponse, data);
-      console.log(data);
+      console.log("serverResponse", serverResponse.data);
+      angular.copy(serverResponse.data, data);
+    });
+  };
+
+  var getFavoritesList = function() {
+    $http.get("/favorites").then(function(serverResponse) {
+      console.log(serverResponse.data);
+      angular.copy(serverResponse.data, data);
+    });
+  };
+
+  var getBorrowedList = function() {
+    $http.get("/borrowed").then(function(serverResponse) {
+      angular.copy(serverResponse.data, data);
+
+      currentLentActivity = data.filter(function(item) {
+        return item.status === true && something !== null;
+      });
+
+      pastActivity = data.filter(function(item) {
+        return item.status === false;
+      });
+
+      console.log("currentLentActivity", currentLentActivity);
     });
   };
 
   return {
     key : {title : "value"},
-    getWishlist : getWishlist
+    getLibrary : getLibrary,
+    getWishlist : getWishlist,
+    getBorrowedList : getBorrowedList,
+    getFavoritesList : getFavoritesList,
+    data : data
   };
 }]);

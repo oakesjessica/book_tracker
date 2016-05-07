@@ -13,9 +13,7 @@ router.get("/", function(req, res) {
     } else {
       var results = [];
       client.query("SELECT * FROM users " +
-      "JOIN wishlist on users.id = wishlist.user_id " +
-      "JOIN books ON wishlist.book_id = books.id " +
-      "WHERE wishlist.user_id = $1;", [userInfo.id], function(err, result) {
+      "JOIN borrowed_and_lent ON users.id = borrowed_and_lent.user_id AND users.id = $1;", [userInfo.id], function(err, result) {
         if (err) {
           console.log(err);
           res.status(500).send(err);

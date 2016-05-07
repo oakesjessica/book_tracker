@@ -1,1 +1,20 @@
-{{wish.page_title}}
+<table class="table wish-table">
+  <thead>
+    <tr>
+      <th class="all sorting">Title</th>
+      <th class="all sorting">Author</th>
+      <th class="all sorting">Series</th>
+      <th class="all sorting"><i class="fa fa-lg fa-heart"></i></th>
+      <th class="all sorting"><i class="fa fa-lg fa-book"></i></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="book in wish.wishList">
+      <td>{{ book.title }}</td>
+      <td>{{ book.author }}</td>
+      <td>{{ book.series }}</td>
+      <td><i class="fa fa-heart" ng-click="wish.removeWish(book)"></i></td>
+      <td><i class="fa fa-book" ng-click="wish.addToLib(book)"></i></td>
+    </tr>
+  </tbody>
+</table>

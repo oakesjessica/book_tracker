@@ -1,1 +1,40 @@
-{{lib.page_title}}
+<table class="table lib-table">
+  <thead>
+    <tr>
+      <th class="all sorting">Title</th>
+      <th class="all sorting">Author</th>
+      <th class="all sorting">Series</th>
+      <th class="all sorting">Status</th>
+      <th class="all sorting">Location</th>
+      <th class="all sorting">Shelves</th>
+      <th class="all sorting"><i class="fa fa-lg fa-star"></i></th>
+      <th class="all sorting"><i class="fa fa-lg fa-heart"></i></th>
+      <th class="all sorting"><i class="fa fa-lg fa-book"></i></th>
+      <th class="all sorting"><i class="fa fa-lg fa-trash"></i></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="book in lib.libraryList">
+      <td>{{ book.title }}</td>
+      <td>{{ book.author }}</td>
+      <td>{{ book.series }}</td>
+      <td>owned, lent to, borrowed</td>
+      <td>{{ book.location }}</td>
+      <td>book shelves</td>
+      <td>
+        <i class="fa fa-heart"></i>
+        <i class="fa fa-heart-o"></i>
+      </td>
+      <td>
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star-o"></i>
+      </td>
+      <td>
+        <i class="fa fa-book"></i>
+      </td>
+      <td>
+        <i class="fa fa-trash-o"></i>
+      </td>
+    </tr>
+  </tbody>
+</table>

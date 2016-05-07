@@ -12,10 +12,11 @@ router.get("/", function(req, res) {
       res.status(500).send(err);
     } else {
       var results = [];
-      client.query("SELECT * FROM users " +
-      "JOIN wishlist on users.id = wishlist.user_id " +
-      "JOIN books ON wishlist.book_id = books.id " +
-      "WHERE wishlist.user_id = $1;", [userInfo.id], function(err, result) {
+      client.query("SELECT * FROM shelves " +
+      "LEFT JOIN book_shelves ON shelves.id = book_shelves.shelf_id " +
+      "LEFT JOIN books ON book_shelves.book_id = books.id " +
+      "WHERE shelves.user_id = $1;",
+      [userInfo.id], function(err, result) {
         if (err) {
           console.log(err);
           res.status(500).send(err);
