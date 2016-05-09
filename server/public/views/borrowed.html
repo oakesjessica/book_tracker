@@ -1,1 +1,27 @@
-{{brw.page_title}}
+<table class="table borrowed-table">
+  <h5>Books I've Borrowed</h5>
+  <thead>
+    <tr>
+      <th class="all sorting">Title</th>
+      <th class="all sorting">Author</th>
+      <th class="all sorting">Series</th>
+      <th class="all sorting">Borrowed From</th>
+      <th class="all sorting">Due Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="book in brw.borrowingList.curr track by $index">
+      <td>{{ book.title }}</td>
+      <td>{{ book.author }}</td>
+      <td>{{ book.series }}</td>
+      <td>{{ book.first_name }} {{ book.last_name }} on {{ book.date_initial_string}}</td>
+      <td>{{ book.due_date_string }}</td>
+    </tr>
+  </tbody>
+</table>
+<div>
+  <h5>Borrowing History</h5>
+  <p ng-repeat="book in brw.borrowingList.past track by $index">
+    Borrowed {{ book.title }} on {{ book.date_initial_string }} from {{ book.first_name }} {{ book.last_name }}, returned on {{ book.date_returned_string }}
+  </p>
+</div>

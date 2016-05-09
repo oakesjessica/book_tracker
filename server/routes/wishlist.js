@@ -1,3 +1,4 @@
+//   WISHLIST ROUTER
 var router = require("express").Router();
 var pg = require("pg");
 
@@ -12,10 +13,10 @@ router.get("/", function(req, res) {
       res.status(500).send(err);
     } else {
       var results = [];
-      client.query("SELECT * FROM users " +
-      "JOIN wishlist on users.id = wishlist.user_id " +
-      "JOIN books ON wishlist.book_id = books.id " +
-      "WHERE wishlist.user_id = $1;", [userInfo.id], function(err, result) {
+      client.query("SELECT books.id AS book_id, books.title, books.series, books.author, books.languages, " +
+      "books.published, books.locations, users.id AS user_id, users.email FROM books " +
+      "JOIN wishlist ON books.id = wishlist.book_id " +
+      "JOIN users ON wishlist.user_id = users.id WHERE users.id = $1;", [userInfo.id], function(err, result) {
         if (err) {
           console.log(err);
           res.status(500).send(err);

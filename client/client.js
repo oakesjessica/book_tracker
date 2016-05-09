@@ -127,24 +127,37 @@ app.controller("BorrowController", ["BookService", function(BookService) {
   var vm = this;
   vm.page_title = "Books I've Borrowed";
 
-  vm.borrowedList = BookService.data;
+  vm.borrowingList = BookService.borrowLentData;
 
   BookService.getBorrowedList();
 
-  console.log("list", vm.borrowedList);
+  console.log("brw", vm.borrowingList);
 }]); //  BorrowedController
 
-app.controller("LentController", function() {
+app.controller("LentController", ["BookService", function(BookService) {
   var vm = this;
   vm.page_title = "Books I've Lent Out";
-}); //  LentController
 
-app.controller("FavoriteController", function() {
+  vm.lendingList = BookService.borrowLentData;
+
+  BookService.getLentList();
+
+  console.log("lend", vm.lendingList);
+}]); //  LentController
+
+app.controller("FavoriteController", ["BookService", function(BookService) {
   var vm = this;
   vm.page_title = "Favorites List";
-}); //  FavoriteController
 
-app.controller("WishController", ["BookService", "UserService", function(BookService, UserService) {
+  vm.favoritesList = BookService.data;
+
+  BookService.getFavoritesList();
+
+  console.log("favcontroller", vm.favoritesList);
+
+}]); //  FavoriteController
+
+app.controller("WishController", ["BookService", function(BookService) {
   var vm = this;
   vm.page_title = "Wish List";
 
@@ -204,44 +217,53 @@ app.factory("UserService", ["$http", "$location", function($http, $location) {
 
 app.factory("BookService", ["$http", function($http) {
   var data = [];
-  var currentLentActivity = [];
-  var pastLActivity = [];
+  var borrowLentData = [];
 
   var getLibrary = function() {
     $http.get("/library").then(function(serverResponse) {
       console.log(serverResponse.data);
       angular.copy(serverResponse.data, data);
     });
-  };
+  };  //  getLibrary
 
   var getWishlist = function() {
     $http.get("/wishlist").then(function(serverResponse) {
-      console.log("serverResponse", serverResponse.data);
       angular.copy(serverResponse.data, data);
     });
-  };
+  };  //  getWishlist
 
   var getFavoritesList = function() {
     $http.get("/favorites").then(function(serverResponse) {
-      console.log(serverResponse.data);
       angular.copy(serverResponse.data, data);
     });
-  };
+  };  //  getFavoritesList
 
   var getBorrowedList = function() {
     $http.get("/borrowed").then(function(serverResponse) {
-      angular.copy(serverResponse.data, data);
-
-      currentLentActivity = data.filter(function(item) {
-        return item.status === true && something !== null;
+      borrowLentData.curr = serverResponse.data.filter(function(media) {
+        return media.status === true;
       });
 
-      pastActivity = data.filter(function(item) {
-        return item.status === false;
+      borrowLentData.past = serverResponse.data.filter(function(media) {
+        return media.status === false;
       });
-
-      console.log("currentLentActivity", currentLentActivity);
     });
+  };  //  getBorrowedList
+
+  var getLentList = function() {
+    $http.get("/lent").then(function(serverResponse) {
+      borrowLentData.curr = serverResponse.data.filter(function(media) {
+        return media.status === true;
+      });
+
+      borrowLentData.past = serverResponse.data.filter(function(media) {
+        return media.status === false;
+      });
+    });
+  }; //  getLentList
+
+  var getShelves = function() {
+
   };
 
   return {
@@ -249,7 +271,9 @@ app.factory("BookService", ["$http", function($http) {
     getLibrary : getLibrary,
     getWishlist : getWishlist,
     getBorrowedList : getBorrowedList,
+    getLentList : getLentList,
     getFavoritesList : getFavoritesList,
-    data : data
+    data : data,
+    borrowLentData : borrowLentData
   };
 }]);

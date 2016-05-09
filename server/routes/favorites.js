@@ -1,4 +1,4 @@
-//  SHELVES ROUTER
+//  FAVORITES Router
 var router = require("express").Router();
 var pg = require("pg");
 
@@ -13,10 +13,10 @@ router.get("/", function(req, res) {
       res.status(500).send(err);
     } else {
       var results = [];
-      client.query("SELECT * FROM shelves " +
-      "LEFT JOIN book_shelves ON shelves.id = book_shelves.shelf_id " +
-      "LEFT JOIN books ON book_shelves.book_id = books.id " +
-      "WHERE shelves.user_id = $1;", [userInfo.id], function(err, result) {
+      client.query("SELECT users.id AS user_id, users.email, books.id AS book_id, books.title, " +
+      "books.series, books.author, books.languages, books.published, books.locations FROM books " +
+      "JOIN favorites ON books.id = favorites.book_id " +
+      "JOIN users ON favorites.user_id = users.id WHERE users.id = $1;", [userInfo.id], function(err, result) {
         if (err) {
           console.log(err);
           res.status(500).send(err);
