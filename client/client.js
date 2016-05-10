@@ -1,4 +1,4 @@
-var app = angular.module("bookApp", ["ngRoute"]);
+var app = angular.module("bookApp", ["ngRoute", "smart-table"]);
 
 /////////////////////////////////////////////////
                 /*Config*/
@@ -104,7 +104,8 @@ app.controller("SearchController", function() {
 
 app.controller("LibraryController", ["BookService", function(BookService) {
   var vm = this;
-  vm.page_title = "Library List";
+  vm.page_title = "My Library";
+  vm.displayLibrary = [];
   vm.libraryList = BookService.data;
 
   BookService.getLibrary();
@@ -133,10 +134,16 @@ app.controller("LocationController", ["BookService", function(BookService) {
 
 app.controller("BorrowController", ["BookService", function(BookService) {
   var vm = this;
+  vm.displayBorrowed = [];
   vm.page_title = "Books I'm Borrowing";
   vm.borrowingList = BookService.borrowLentData;
 
   BookService.getBorrowedList();
+
+  vm.emailBookOwner = function(book) {
+    console.log(book);
+    console.log("owner ID", book.book_id, book.owner_id);
+  };
 }]); //  BorrowedController
 
 app.controller("LentController", ["BookService", function(BookService) {
@@ -145,11 +152,17 @@ app.controller("LentController", ["BookService", function(BookService) {
   vm.lendingList = BookService.borrowLentData;
 
   BookService.getLentList();
+
+  vm.reminder = function(book) {
+    console.log(book);
+    console.log(book.book_id, book.borrower_id);
+  };
 }]); //  LentController
 
 app.controller("FavoriteController", ["BookService", function(BookService) {
   var vm = this;
   vm.page_title = "Favorites List";
+  vm.displayFavorites = [];
   vm.favoritesList = BookService.data;
 
   BookService.getFavoritesList();
@@ -162,6 +175,7 @@ app.controller("FavoriteController", ["BookService", function(BookService) {
 app.controller("WishController", ["BookService", function(BookService) {
   var vm = this;
   vm.page_title = "Wish List";
+  vm.displayWishlist = [];
   vm.wishList = BookService.data;
 
   BookService.getWishlist();

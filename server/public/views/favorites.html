@@ -1,18 +1,18 @@
-<table class="table favorites-table">
+<table st-table="fav.displayFavorites" st-safe-src="fav.favoritesList" class="table wish-table table-striped table-hover table-responsive">
   <thead>
     <tr>
-      <th class="all sorting">Title</th>
-      <th class="all sorting">Author</th>
-      <th class="all sorting">Series</th>
+      <th st-sort="title">Title</th>
+      <th st-sort="author">Author</th>
+      <th st-sort="series">Series</th>
       <th class="all sorting"><i class="fa fa-lg fa-star"></i></th>
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="book in fav.favoritesList track by $index">
+    <tr ng-repeat="book in fav.displayFavorites">
       <td>{{ book.title }}</td>
       <td>{{ book.author }}</td>
       <td>{{ book.series }}</td>
-      <td><i class="fa fa-star" ng-click="fav.removeFavStar(book)"></i></td>
+      <td><i class="fa fa-star" ng-click="fav.removeFavStar(book)" title="Remove from Favorites"></i></td>
     </tr>
   </tbody>
 </table>

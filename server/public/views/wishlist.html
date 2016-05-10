@@ -1,19 +1,19 @@
-<table class="table wish-table">
+<table st-table="wish.displayWishlist" st-safe-src="wish.wishList" class="table wish-table table-striped table-hover table-responsive">
   <thead>
     <tr>
-      <th class="all sorting">Title</th>
-      <th class="all sorting">Author</th>
-      <th class="all sorting">Series</th>
-      <th class="all sorting"><i class="fa fa-lg fa-heart"></i></th>
-      <th class="all sorting"><i class="fa fa-lg fa-book"></i></th>
+      <th st-sort="title">Title</th>
+      <th st-sort="author">Author</th>
+      <th st-sort="series">Series</th>
+      <th><i class="fa fa-lg fa-heart"></i></th>
+      <th><i class="fa fa-lg fa-book"></i></th>
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="book in wish.wishList track by $index">
+    <tr ng-repeat="book in wish.displayWishlist track by $index">
       <td>{{ book.title }}</td>
       <td>{{ book.author }}</td>
       <td>{{ book.series }}</td>
-      <td><i class="fa fa-heart" ng-click="wish.removeWishHeart(book)"></i></td>
+      <td><i class="fa fa-heart" ng-click="wish.removeWishHeart(book)" title="Remove from Wishlist"></i></td>
       <td><i class="fa fa-book" ng-click="wish.addToLib(book)"></i></td>
     </tr>
   </tbody>

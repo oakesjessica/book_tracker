@@ -28,6 +28,7 @@ module.exports = function(grunt) {
           "angular/angular.min.js.map",
           "angular-route/angular-route.min.js",
           "angular-route/angular-route.min.js.map",
+          "angular-smart-table/dist/smart-table.min.js",
           "bootstrap/dist/css/bootstrap.min.css",
           "bootstrap/dist/css/bootstrap.min.css.map",
           "bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",

@@ -1,27 +1,30 @@
-<table class="table borrowed-table">
-  <h5>{{brw.page_title}}</h5>
+<table st-table="brw.displayBorrowed" st-safe-src="brw.borrowingList.curr" class="table borrowed-table table-striped table-hover table-responsive" >
+  <h5 class="text-center">{{brw.page_title}}</h5>
   <thead>
     <tr>
-      <th class="all sorting">Title</th>
-      <th class="all sorting">Author</th>
-      <th class="all sorting">Series</th>
-      <th class="all sorting">Borrowed From</th>
-      <th class="all sorting">Due Date</th>
+      <th st-sort="title">Title</th>
+      <th st-sort="author">Author</th>
+      <th st-sort="series">Series</th>
+      <th st-sort="last_name">Borrowed From</th>
+      <th st-sort="due_date">Due Date</th>
+      <th>Return</th>
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="book in brw.borrowingList.curr track by $index">
+    </tr>
+    <tr ng-repeat="book in brw.displayBorrowed">
       <td>{{ book.title }}</td>
       <td>{{ book.author }}</td>
       <td>{{ book.series }}</td>
-      <td>{{ book.first_name }} {{ book.last_name }} on {{ book.date_initial_string}}</td>
-      <td>{{ book.due_date_string }}</td>
+      <td>{{ book.first_name }} {{ book.last_name }} on {{ book.date_initial | date}}</td>
+      <td>{{ book.due_date | date }} <i class="fa fa-envelope-o" title="Remind {{ book.first_name }} {{ book.last_name }}" ng-click="brw.emailBookOwner(book)"></i></td>
+      <td><input type="button" class="btn btn-xs btn-danger" title="Return Book" value="Return" /></td>
     </tr>
   </tbody>
 </table>
 <div>
   <h5>Borrowing History</h5>
   <p ng-repeat="book in brw.borrowingList.past track by $index">
-    Borrowed <i>{{ book.title }}</i> on {{ book.date_initial_string }} from {{ book.first_name }} {{ book.last_name }}, returned on {{ book.date_returned_string }}
+    Borrowed <i>{{ book.title }}</i> on {{ book.date_initial | date }} from {{ book.first_name }} {{ book.last_name }}, returned on {{ book.date_returned | date }}
   </p>
 </div>

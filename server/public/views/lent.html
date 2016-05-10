@@ -1,27 +1,27 @@
-<table class="table borrowed-table">
+<table st-table="lent.displayLent" st-safe-src="lent.lendingList.curr" class="table borrowed-table table-striped table-hover table-responsive">
   <h5>{{lent.page_title}}</h5>
   <thead>
     <tr>
-      <th class="all sorting">Title</th>
-      <th class="all sorting">Author</th>
-      <th class="all sorting">Series</th>
-      <th class="all sorting">Lent to</th>
-      <th class="all sorting">Due Date</th>
+      <th st-sort="title">Title</th>
+      <th st-sort="author">Author</th>
+      <th st-sort="series">Series</th>
+      <th st-sort="last_name">Lent to</th>
+      <th class="text-center" st-sort="due_date">Due Date</th>
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="book in lent.lendingList.curr track by $index">
-      <td>{{ book.title }}</td>
+    <tr ng-repeat="book in lent.displayLent">
+      <td><span>{{ book.title }}</span></td>
       <td>{{ book.author }}</td>
       <td>{{ book.series }}</td>
       <td>{{ book.first_name }} {{ book.last_name }}</td>
-      <td>{{ book.due_date_string }}</td>
+      <td class="text-center">{{ book.due_date | date }} <i class="fa fa-envelope-o" title="Send email to {{ book.first_name }} {{ book.last_name }} re: {{ book.title }}" ng-click="lent.reminder(book)"></i></td>
     </tr>
   </tbody>
 </table>
 <div>
-  <h5>Borrowing History</h5>
+  <h5>Lending History</h5>
   <p ng-repeat="book in lent.lendingList.past track by $index">
-    Loaned <i>{{ book.title }}</i> on {{ book.date_initial_string }} to {{ book.first_name }} {{ book.last_name }}, returned on {{ book.date_returned_string }}
+    Loaned <i>{{ book.title }}</i> on {{ book.date_initial | date }} to {{ book.first_name }} {{ book.last_name }}, returned on {{ book.date_returned | date }}
   </p>
 </div>

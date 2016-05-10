@@ -49,3 +49,7 @@ li {
 .fa:hover {
   color: red;
 }
+
+.borrowed-table tr:table-hover {
+  background-color: lightblue;
+}

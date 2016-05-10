@@ -1,33 +1,54 @@
-<table class="table lib-table">
+<table st-table="lib.displayLibrary" st-safe-src="lib.libraryList" class="table lib-table table-striped table-hover table-responsive">
+  <h5 class="text-center">{{lib.page_title}}</h5>
   <thead>
     <tr>
-      <th class="all sorting">Title</th>
-      <th class="all sorting">Author</th>
-      <th class="all sorting">Series</th>
-      <th class="all sorting">Status</th>
-      <th class="all sorting">Location</th>
-      <th class="all sorting">Shelves</th>
-      <th class="all sorting"><i class="fa fa-lg fa-star"></i></th>
-      <th class="all sorting"><i class="fa fa-lg fa-heart"></i></th>
-      <th class="all sorting"><i class="fa fa-lg fa-book"></i></th>
-      <th class="all sorting"><i class="fa fa-lg fa-trash"></i></th>
+      <th st-sort="title">Title</th>
+      <th st-sort="author">Author</th>
+      <th st-sort="series">Series</th>
+      <th st-sort="status">Status</th>
+      <th st-sort="locations">Location</th>
+      <th>Shelves</th>
+      <th st-sort="favorites"><i class="fa fa-lg fa-star"></i></th>
+      <th st-sort="wishlist"><i class="fa fa-lg fa-heart"></i></th>
+      <th st-sort="add"><i class="fa fa-lg fa-book"></i></th>
+      <th><i class="fa fa-lg fa-trash"></i></th>
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="book in lib.libraryList">
+    <tr>
+      <th>
+        <input st-search="title" placeholder="Search by Title" class="input-sm form-control" type="search" />
+      </th>
+      <th>
+        <input st-search="author" placeholder="Search by Author" class="input-sm form-control" type="search" />
+      </th>
+      <th>
+        <input st-search="series" placeholder="Search by Series" class="input-sm form-control" type="search" />
+      </th>
+      <th></th>
+      <th>
+        <input st-search="location" placeholder="Search by Location" class="input-sm form-control" type="search" />
+      </th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    <tr ng-repeat="book in lib.displayLibrary | orderBy:'series'">
       <td>{{ book.title }}</td>
       <td>{{ book.author }}</td>
       <td>{{ book.series }}</td>
       <td>owned, lent to, borrowed</td>
-      <td>{{ book.location }}</td>
+      <td>{{ book.locations }}</td>
       <td>book shelves</td>
-      <td>
-        <i class="fa fa-heart"></i>
-        <i class="fa fa-heart-o"></i>
-      </td>
       <td>
         <i class="fa fa-star"></i>
         <i class="fa fa-star-o"></i>
+      </td>
+      <td>
+        <i class="fa fa-heart"></i>
+        <i class="fa fa-heart-o"></i>
       </td>
       <td>
         <i class="fa fa-book"></i>
