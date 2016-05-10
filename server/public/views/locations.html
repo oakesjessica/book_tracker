@@ -2,11 +2,11 @@
 
 <ul>
   <li ng-repeat="(location, bookList) in loc.locationsList.allLocations">
-    {{ location }}
+    <h5>{{ location }}</h5>
     <!-- {{ bookList }} -->
     <ul>
       <li ng-repeat="book in bookList">
-        {{ book.title }}
+        <span>{{ book.title }}</span>
       </li>
     </ul>
   </li>

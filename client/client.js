@@ -153,6 +153,10 @@ app.controller("FavoriteController", ["BookService", function(BookService) {
   vm.favoritesList = BookService.data;
 
   BookService.getFavoritesList();
+
+  vm.removeFavStar = function(book) {
+    BookService.removeFav(book.book_id);
+  };  //  vm.removeFav
 }]); //  FavoriteController
 
 app.controller("WishController", ["BookService", function(BookService) {
@@ -162,8 +166,9 @@ app.controller("WishController", ["BookService", function(BookService) {
 
   BookService.getWishlist();
 
-  vm.removeWish = function(book) {
-    console.log(book);
+  vm.removeWishHeart = function(book) {
+    console.log(book.book_id);
+    BookService.removeWish(book.book_id);
   };
 }]); //  WishController
 
@@ -285,6 +290,20 @@ app.factory("BookService", ["$http", function($http) {
     });
   };
 
+  var removeFav = function(bookID) {
+    console.log(bookID);
+    $http.delete("/favorites/" + bookID).then(function(serverResponse) {
+      getFavoritesList();
+    });
+  };
+
+  var removeWish = function(bookID) {
+    console.log(bookID);
+    $http.delete("/wishlist/" + bookID).then(function(serverResponse) {
+      getWishlist();
+    });
+  };
+
 
   return {
     key : {title : "value"},
@@ -295,6 +314,8 @@ app.factory("BookService", ["$http", function($http) {
     getFavoritesList : getFavoritesList,
     getByShelves : getByShelves,
     getByLocations : getByLocations,
+    removeFav : removeFav,
+    removeWish : removeWish,
     data : data,
     borrowLentData : borrowLentData
   };

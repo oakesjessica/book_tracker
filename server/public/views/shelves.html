@@ -1,9 +1,9 @@
 <ul>
   <li ng-repeat="(shelf, bookList) in shelf.shelvesList.allShelves">
-    {{ shelf }}
+    <h5>{{ shelf }}</h5>
     <ul>
       <li ng-repeat="book in bookList">
-        {{ book.title }}
+        <span>{{ book.title }}</span>
       </li>
     </ul>
   </li>
