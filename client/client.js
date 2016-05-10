@@ -112,21 +112,23 @@ app.controller("LibraryController", ["BookService", function(BookService) {
 
   console.log("lib", vm.libraryList);
 
+  vm.showInfo = function(book) {
+    console.log(book.book_id, book.user_id);
+  };
 }]); //  LibraryController
 
 app.controller("ShelvesController", ["BookService", function(BookService) {
   var vm = this;
-  vm.page_title = "Shelf List";
+  vm.page_title = "Book Shelves";
+  vm.displayShelves = [];
   vm.shelvesList = BookService.data;
 
   BookService.getByShelves();
-
-  console.log("shelves", vm.shelvesList);
 }]); //  ShelvesController
 
 app.controller("LocationController", ["BookService", function(BookService) {
   var vm = this;
-  vm.page_title = "Locations List";
+  vm.page_title = "Book Locations";
   vm.locationsList = BookService.data;
 
   BookService.getByLocations();
@@ -144,6 +146,8 @@ app.controller("BorrowController", ["BookService", function(BookService) {
     console.log(book);
     console.log("owner ID", book.book_id, book.owner_id);
   };
+
+
 }]); //  BorrowedController
 
 app.controller("LentController", ["BookService", function(BookService) {
@@ -157,6 +161,7 @@ app.controller("LentController", ["BookService", function(BookService) {
     console.log(book);
     console.log(book.book_id, book.borrower_id);
   };
+
 }]); //  LentController
 
 app.controller("FavoriteController", ["BookService", function(BookService) {
@@ -250,7 +255,6 @@ app.factory("BookService", ["$http", function($http) {
 
   var getLibrary = function() {
     $http.get("/library").then(function(serverResponse) {
-      console.log(serverResponse.data);
       angular.copy(serverResponse.data, data);
     });
   };  //  getLibrary
@@ -294,7 +298,7 @@ app.factory("BookService", ["$http", function($http) {
   var getByShelves = function() {
     $http.get("/shelves").then(function(serverResponse) {
       data.allShelves = filterAndSort(serverResponse.data, "shelf_name");
-      console.log(data);
+      console.log(data.allShelves);
     });
   };
 
@@ -305,14 +309,12 @@ app.factory("BookService", ["$http", function($http) {
   };
 
   var removeFav = function(bookID) {
-    console.log(bookID);
     $http.delete("/favorites/" + bookID).then(function(serverResponse) {
       getFavoritesList();
     });
   };
 
   var removeWish = function(bookID) {
-    console.log(bookID);
     $http.delete("/wishlist/" + bookID).then(function(serverResponse) {
       getWishlist();
     });

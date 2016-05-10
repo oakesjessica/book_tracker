@@ -50,6 +50,46 @@ li {
   color: red;
 }
 
-.borrowed-table tr:table-hover {
-  background-color: lightblue;
+.shelfNames, .locationNames {
+  list-style-type: none;
+
+}
+
+.booksInAShelf, .booksByLocations {
+  list-style-type: disc;
+  -webkit-transition: all 1s cubic-bezier(0, 1, 0.5, 1);
+  -moz-transition: all 1s cubic-bezier(0, 1, 0.5, 1);
+  -o-transition: all 1s cubic-bezier(0, 1, 0.5, 1);
+  transition: all 1s cubic-bezier(0, 1, 0.5, 1);
+}
+
+.history {
+  padding: 0px 20px;
+}
+
+/*Have cursor be a pointer to indicate sortability*/
+.sortable, .expandBooks {
+  cursor: pointer;
+}
+
+/*Display 'fa-sort' icon after each sortable <th> tag*/
+.sortable:after {
+  font-family: FontAwesome;
+  content: "\f0dc";
+  color: #bababa;
+  padding: 0px 0px 0px 5px;
+}
+
+/*Display ascending sorting arrow*/
+.st-sort-ascent:after {
+  font-family: FontAwesome;
+  content: "\f0de";
+  color: #0a7e8c;
+}
+
+/*Display descending arrow*/
+.st-sort-descent:after {
+  font-family: FontAwesome;
+  content: "\f0dd";
+  color: #0a7e8c;
 }

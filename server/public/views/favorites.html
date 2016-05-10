@@ -1,10 +1,11 @@
 <table st-table="fav.displayFavorites" st-safe-src="fav.favoritesList" class="table wish-table table-striped table-hover table-responsive">
+  <h5 class="text-center">{{fav.page_title}}</h5>
   <thead>
     <tr>
-      <th st-sort="title">Title</th>
-      <th st-sort="author">Author</th>
-      <th st-sort="series">Series</th>
-      <th class="all sorting"><i class="fa fa-lg fa-star"></i></th>
+      <th st-sort="title" class="sortable">Title</th>
+      <th st-sort="author" class="sortable">Author</th>
+      <th st-sort="series" class="sortable">Series</th>
+      <th><i class="fa fa-lg fa-star"></i></th>
     </tr>
   </thead>
   <tbody>

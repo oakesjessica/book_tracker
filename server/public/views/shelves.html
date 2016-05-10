@@ -1,10 +1,38 @@
-<ul>
+<!-- <h5>{{ shelf.page_title }}</h5> -->
+<!-- <ul class="shelfNames">
   <li ng-repeat="(shelf, bookList) in shelf.shelvesList.allShelves">
-    <h5>{{ shelf }}</h5>
-    <ul>
+    <h5 class="expandBooks" ng-click="showShelves = !showShelves">{{ shelf }}</h5>
+    <ul ng-show="showShelves" class="booksInAShelf">
       <li ng-repeat="book in bookList">
         <span>{{ book.title }}</span>
       </li>
     </ul>
   </li>
-</ul>
+</ul> -->
+
+
+<table st-table="shelf.displayShelves" st-safe-src="shelf.shelvesList.allShelves" class="table shelf-table table-striped table-hover table-responsive" >
+  <h5 class="text-center">{{shelf.page_title}}</h5>
+  <thead>
+    <tr>
+      <th st-sort="shelf.displayShelves" class="sortable">Shelf</th>
+    </tr>
+  </thead>
+  <tbody ng-repeat="bookArr in shelf.displayShelves">
+    <tr>
+      <th>
+        <input st-search="series" placeholder="Search for Shelf" class="input-sm form-control" type="search" />
+      </th>
+    </tr>
+    <tr ng-repeat="(shelf, booklist) in bookArr">
+      <td>
+        <h5 class="expandBooks" ng-click="expandShelf = !expandShelf">{{ shelf }}</h5>
+        <ul ng-show="expandShelf" class="booksInAShelf">
+          <li ng-repeat="book in booklist">
+            {{ book.title }}
+          </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>

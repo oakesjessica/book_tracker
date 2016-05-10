@@ -2,15 +2,14 @@
   <h5 class="text-center">{{lib.page_title}}</h5>
   <thead>
     <tr>
-      <th st-sort="title">Title</th>
-      <th st-sort="author">Author</th>
-      <th st-sort="series">Series</th>
-      <th st-sort="status">Status</th>
-      <th st-sort="locations">Location</th>
+      <th st-sort="title" class="sortable">Title</th>
+      <th st-sort="author" class="sortable">Author</th>
+      <th st-sort="series" class="sortable">Series</th>
+      <th st-sort="status" class="sortable">Status</th>
+      <th st-sort="locations" class="sortable">Location</th>
       <th>Shelves</th>
       <th st-sort="favorites"><i class="fa fa-lg fa-star"></i></th>
       <th st-sort="wishlist"><i class="fa fa-lg fa-heart"></i></th>
-      <th st-sort="add"><i class="fa fa-lg fa-book"></i></th>
       <th><i class="fa fa-lg fa-trash"></i></th>
     </tr>
   </thead>
@@ -27,16 +26,18 @@
       </th>
       <th></th>
       <th>
-        <input st-search="location" placeholder="Search by Location" class="input-sm form-control" type="search" />
+        <input st-search="locations" placeholder="Search by Location" class="input-sm form-control" type="search" />
       </th>
       <th></th>
       <th></th>
       <th></th>
       <th></th>
-      <th></th>
     </tr>
-    <tr ng-repeat="book in lib.displayLibrary | orderBy:'series'">
-      <td>{{ book.title }}</td>
+    <tr ng-repeat="book in lib.displayLibrary">
+      <td>
+        {{ book.title }}
+        <input type="button" class="btn btn-xs btn-info" title="More Info" ng-click="lib.showInfo(book)" value="More"/>
+      </td>
       <td>{{ book.author }}</td>
       <td>{{ book.series }}</td>
       <td>owned, lent to, borrowed</td>
@@ -49,9 +50,6 @@
       <td>
         <i class="fa fa-heart"></i>
         <i class="fa fa-heart-o"></i>
-      </td>
-      <td>
-        <i class="fa fa-book"></i>
       </td>
       <td>
         <i class="fa fa-trash-o"></i>

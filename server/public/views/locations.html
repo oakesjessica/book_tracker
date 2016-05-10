@@ -1,10 +1,9 @@
-<!-- {{ loc.locationsList.allLocations }} -->
-
-<ul>
+<h5 class="text-center">{{loc.page_title}}</h5>
+<ul class="locationNames">
   <li ng-repeat="(location, bookList) in loc.locationsList.allLocations">
-    <h5>{{ location }}</h5>
+    <h5 class="expandBooks" ng-click="showLocations = !showLocations">{{ location }}</h5>
     <!-- {{ bookList }} -->
-    <ul>
+    <ul ng-show="showLocations" class="booksByLocations">
       <li ng-repeat="book in bookList">
         <span>{{ book.title }}</span>
       </li>

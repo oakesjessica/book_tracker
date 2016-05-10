@@ -2,18 +2,17 @@
   <h5 class="text-center">{{brw.page_title}}</h5>
   <thead>
     <tr>
-      <th st-sort="title">Title</th>
-      <th st-sort="author">Author</th>
-      <th st-sort="series">Series</th>
-      <th st-sort="last_name">Borrowed From</th>
-      <th st-sort="due_date">Due Date</th>
+      <th st-sort="title" class="sortable">Title</th>
+      <th st-sort="author" class="sortable">Author</th>
+      <th st-sort="series" class="sortable">Series</th>
+      <th st-sort="last_name" class="sortable">Borrowed From</th>
+      <th st-sort="due_date" class="sortable">Due Date</th>
       <th>Return</th>
     </tr>
   </thead>
   <tbody>
-    </tr>
     <tr ng-repeat="book in brw.displayBorrowed">
-      <td>{{ book.title }}</td>
+      <td>{{ book.title }} <input type="button" class="btn btn-xs btn-info" title="More Info" ng-click="brw.showInfo(book)" value="More"/></td>
       <td>{{ book.author }}</td>
       <td>{{ book.series }}</td>
       <td>{{ book.first_name }} {{ book.last_name }} on {{ book.date_initial | date}}</td>
@@ -22,9 +21,9 @@
     </tr>
   </tbody>
 </table>
-<div>
-  <h5>Borrowing History</h5>
+<div class="history">
+  <h5 class="text-center">Borrowing History</h5>
   <p ng-repeat="book in brw.borrowingList.past track by $index">
-    Borrowed <i>{{ book.title }}</i> on {{ book.date_initial | date }} from {{ book.first_name }} {{ book.last_name }}, returned on {{ book.date_returned | date }}
+    <span>Borrowed <i>{{ book.title }}</i> on {{ book.date_initial | date }} from {{ book.first_name }} {{ book.last_name }}, returned on {{ book.date_returned | date }}</span>
   </p>
 </div>

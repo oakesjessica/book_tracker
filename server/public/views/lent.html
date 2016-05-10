@@ -1,27 +1,51 @@
 <table st-table="lent.displayLent" st-safe-src="lent.lendingList.curr" class="table borrowed-table table-striped table-hover table-responsive">
-  <h5>{{lent.page_title}}</h5>
+  <h5 class="text-center">{{lent.page_title}}</h5>
+  <div>
+    <input type="button" class="btn btn-xs btn-primary" title="Lend Another Book" value="Lend Another Book" ng-click="lendAnother = true" ng-hide="lendAnother"/>
+    <input type="search" class="input-sm" ng-show="lendAnother"/>
+    <input type="button" class="btn btn-xs btn-info" title="Cancel" value="Cancel" ng-show="lendAnother"  ng-click="lendAnother = false"/>
+    <input type="button" class="btn btn-xs btn-primary" title="Lend" value="lend" ng-show="lendAnother" ng-click=""/>
+  </div>
   <thead>
     <tr>
-      <th st-sort="title">Title</th>
-      <th st-sort="author">Author</th>
-      <th st-sort="series">Series</th>
-      <th st-sort="last_name">Lent to</th>
+      <th st-sort="title" class="sortable">Title</th>
+      <th st-sort="author" class="sortable">Author</th>
+      <th st-sort="series" class="sortable">Series</th>
+      <th st-sort="last_name" class="sortable">Lent to</th>
       <th class="text-center" st-sort="due_date">Due Date</th>
     </tr>
   </thead>
   <tbody>
     <tr ng-repeat="book in lent.displayLent">
-      <td><span>{{ book.title }}</span></td>
+      <td>
+        {{ book.title }}
+        <input type="button" class="btn btn-xs btn-info" title="More Info" ng-click="brw.openModal()" value="More"/>
+      </td>
       <td>{{ book.author }}</td>
       <td>{{ book.series }}</td>
       <td>{{ book.first_name }} {{ book.last_name }}</td>
-      <td class="text-center">{{ book.due_date | date }} <i class="fa fa-envelope-o" title="Send email to {{ book.first_name }} {{ book.last_name }} re: {{ book.title }}" ng-click="lent.reminder(book)"></i></td>
+      <td class="text-center">
+        {{ book.due_date | date }}
+        <i class="fa fa-envelope-o" title="Send email to {{ book.first_name }} {{ book.last_name }} re: {{ book.title }}" ng-click="lent.reminder(book)"></i>
+      </td>
     </tr>
   </tbody>
 </table>
-<div>
-  <h5>Lending History</h5>
+<div class="history">
+  <h5 class="text-center">Lending History</h5>
   <p ng-repeat="book in lent.lendingList.past track by $index">
-    Loaned <i>{{ book.title }}</i> on {{ book.date_initial | date }} to {{ book.first_name }} {{ book.last_name }}, returned on {{ book.date_returned | date }}
+    <span>Loaned <i>{{ book.title }}</i> on {{ book.date_initial | date }} to {{ book.first_name }} {{ book.last_name }}, returned on {{ book.date_returned | date }}</span>
   </p>
+</div>
+
+<div class="modal">
+  <div class="modal-dialog">
+    <div class="model-body">
+    </div>
+    <div class="modal-footer">
+      <input type="button" class="btn btn-sm btn-secondary" ng-click="closeDialog()" title="Close" value="Close"/>
+      <input type="button" class="btn btn-sm btn-primary" ng-click="closeDialog()" title="Edit" value="Edit"/>
+      <input type="button" class="btn btn-sm btn-success" ng-click="editInfo" title="Edit"/>
+    </div>
+  </div>
 </div>

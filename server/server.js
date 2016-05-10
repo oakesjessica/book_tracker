@@ -6,7 +6,6 @@ var session = require('express-session');
 var pg = require('pg');
 var localStrategy = require('passport-local').Strategy;
 
-
 //  ROUTE FILES
 var index = require("./routes/index");
 var login = require("./routes/login");
@@ -71,7 +70,7 @@ passport.use("local", new localStrategy(
             }
           } else {
             done(null, false, { message : "Incorrect email and password." });
-          }
+          } //  outer-else
           client.end();
         }); //  query.on("end")
       } //  else
