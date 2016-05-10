@@ -1,1 +1,13 @@
-{{loc.page_title}}
+<!-- {{ loc.locationsList.allLocations }} -->
+
+<ul>
+  <li ng-repeat="(location, bookList) in loc.locationsList.allLocations">
+    {{ location }}
+    <!-- {{ bookList }} -->
+    <ul>
+      <li ng-repeat="book in bookList">
+        {{ book.title }}
+      </li>
+    </ul>
+  </li>
+</ul>

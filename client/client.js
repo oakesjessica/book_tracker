@@ -113,59 +113,54 @@ app.controller("LibraryController", ["BookService", function(BookService) {
 
 }]); //  LibraryController
 
-app.controller("ShelvesController", function() {
+app.controller("ShelvesController", ["BookService", function(BookService) {
   var vm = this;
   vm.page_title = "Shelf List";
-}); //  ShelvesController
+  vm.shelvesList = BookService.data;
 
-app.controller("LocationController", function() {
+  BookService.getByShelves();
+
+  console.log("shelves", vm.shelvesList);
+}]); //  ShelvesController
+
+app.controller("LocationController", ["BookService", function(BookService) {
   var vm = this;
   vm.page_title = "Locations List";
-}); //  LocationController
+  vm.locationsList = BookService.data;
+
+  BookService.getByLocations();
+}]); //  LocationController
 
 app.controller("BorrowController", ["BookService", function(BookService) {
   var vm = this;
-  vm.page_title = "Books I've Borrowed";
-
+  vm.page_title = "Books I'm Borrowing";
   vm.borrowingList = BookService.borrowLentData;
 
   BookService.getBorrowedList();
-
-  console.log("brw", vm.borrowingList);
 }]); //  BorrowedController
 
 app.controller("LentController", ["BookService", function(BookService) {
   var vm = this;
   vm.page_title = "Books I've Lent Out";
-
   vm.lendingList = BookService.borrowLentData;
 
   BookService.getLentList();
-
-  console.log("lend", vm.lendingList);
 }]); //  LentController
 
 app.controller("FavoriteController", ["BookService", function(BookService) {
   var vm = this;
   vm.page_title = "Favorites List";
-
   vm.favoritesList = BookService.data;
 
   BookService.getFavoritesList();
-
-  console.log("favcontroller", vm.favoritesList);
-
 }]); //  FavoriteController
 
 app.controller("WishController", ["BookService", function(BookService) {
   var vm = this;
   vm.page_title = "Wish List";
-
   vm.wishList = BookService.data;
 
   BookService.getWishlist();
-
-  console.log("wishcontroller", vm.wishList);
 
   vm.removeWish = function(book) {
     console.log(book);
@@ -197,10 +192,11 @@ app.factory("UserService", ["$http", "$location", function($http, $location) {
       console.log(serverResponse);
       if (serverResponse.status === 200) {
         data.login = true;
-        $location.path("/search");
+        $location.path("/borrowed");
       } else {
         //  error message
         data.login = false;
+        $location.path("/login");
       }
     });
   };  //  loginUser
@@ -218,6 +214,20 @@ app.factory("UserService", ["$http", "$location", function($http, $location) {
 app.factory("BookService", ["$http", function($http) {
   var data = [];
   var borrowLentData = [];
+
+  function filterAndSort(arr, comparing) {
+    var newObj = {};
+
+    for (var i = 0; i < arr.length; i++) {
+      var curr = arr[i][comparing];
+      if (newObj[curr]) {
+        newObj[curr].push(arr[i]);
+      } else {
+        newObj[arr[i][comparing]] = [arr[i]];
+      }
+    }
+    return newObj;
+  }
 
   var getLibrary = function() {
     $http.get("/library").then(function(serverResponse) {
@@ -262,9 +272,19 @@ app.factory("BookService", ["$http", function($http) {
     });
   }; //  getLentList
 
-  var getShelves = function() {
-
+  var getByShelves = function() {
+    $http.get("/shelves").then(function(serverResponse) {
+      data.allShelves = filterAndSort(serverResponse.data, "shelf_name");
+      console.log(data);
+    });
   };
+
+  var getByLocations = function() {
+    $http.get("/locations").then(function(serverResponse) {
+      data.allLocations = filterAndSort(serverResponse.data, "locations");
+    });
+  };
+
 
   return {
     key : {title : "value"},
@@ -273,6 +293,8 @@ app.factory("BookService", ["$http", function($http) {
     getBorrowedList : getBorrowedList,
     getLentList : getLentList,
     getFavoritesList : getFavoritesList,
+    getByShelves : getByShelves,
+    getByLocations : getByLocations,
     data : data,
     borrowLentData : borrowLentData
   };

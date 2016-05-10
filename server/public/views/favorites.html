@@ -8,7 +8,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="book in fav.favoritesList">
+    <tr ng-repeat="book in fav.favoritesList track by $index">
       <td>{{ book.title }}</td>
       <td>{{ book.author }}</td>
       <td>{{ book.series }}</td>

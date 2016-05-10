@@ -1,5 +1,5 @@
 <table class="table borrowed-table">
-  <h5>Books I've Borrowed</h5>
+  <h5>{{brw.page_title}}</h5>
   <thead>
     <tr>
       <th class="all sorting">Title</th>
@@ -22,6 +22,6 @@
 <div>
   <h5>Borrowing History</h5>
   <p ng-repeat="book in brw.borrowingList.past track by $index">
-    Borrowed {{ book.title }} on {{ book.date_initial_string }} from {{ book.first_name }} {{ book.last_name }}, returned on {{ book.date_returned_string }}
+    Borrowed <i>{{ book.title }}</i> on {{ book.date_initial_string }} from {{ book.first_name }} {{ book.last_name }}, returned on {{ book.date_returned_string }}
   </p>
 </div>

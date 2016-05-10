@@ -20,8 +20,10 @@ router.get("/", function(req, res) {
         if (err) {
           console.log(err);
           res.status(500).send(err);
+          process.exit(1);
         } else {
           res.send(result.rows);
+          done();
         }
       });
     } //  else

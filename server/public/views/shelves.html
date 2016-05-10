@@ -1,1 +1,10 @@
-{{shelf.page_title}}
+<ul>
+  <li ng-repeat="(shelf, bookList) in shelf.shelvesList.allShelves">
+    {{ shelf }}
+    <ul>
+      <li ng-repeat="book in bookList">
+        {{ book.title }}
+      </li>
+    </ul>
+  </li>
+</ul>

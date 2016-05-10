@@ -1,10 +1,23 @@
+//  SERVER FILE
 var express = require("express");
 var bodyParser = require("body-parser");
 var passport = require('passport');
 var session = require('express-session');
 var pg = require('pg');
 var localStrategy = require('passport-local').Strategy;
+
+
+//  ROUTE FILES
 var index = require("./routes/index");
+var login = require("./routes/login");
+var register = require("./routes/register");
+var library = require("./routes/library");
+var wishlist = require("./routes/wishlist");
+var favorites = require("./routes/favorites");
+var shelves = require("./routes/shelves");
+var borrowed = require("./routes/borrowed");
+var lent = require("./routes/lent");
+var locations = require("./routes/locations");
 
 var app = express();
 
@@ -20,7 +33,7 @@ app.use(session({
   secret : "secret",
   resave : true,
   saveUninitialized : false,
-  cookie : { maxAge : 300000, secure : false }
+  cookie : { maxAge : 600000, secure : false }
 }));  //  app.use(session)
 
 //  Passport Initialization
@@ -85,7 +98,6 @@ passport.deserializeUser(function(id, done) {
       var query = client.query("SELECT * FROM users WHERE id = $1", [id]);
 
       query.on("row", function(row) {
-        console.log("User row", row);
         user = row;
         done(null, user);
       });
@@ -100,6 +112,28 @@ passport.deserializeUser(function(id, done) {
 
 //  Routers
 app.use("/", index);
+app.use("/register", register);
+app.use("/library", library);
+app.use("/wishlist", wishlist);
+app.use("/favorites", favorites);
+app.use("/shelves", shelves);
+app.use("/borrowed", borrowed);
+app.use("/lent", lent);
+app.use("/locations", locations);
+
+// router.use("/login", function(req, res, next) {
+//   if (req.isAuthenticated()) {
+//     next(); //  User is logged in, continue
+//   } else {
+//     res.redirect("/login"); //  Not logged in, send back to login page
+//   }
+// });
+app.use("/login", login);
+
+app.get("/*", function(req, res) {
+  res.sendFile(path.join(__dirname, "../public/views/index.html"));
+});
+
 
 var server = app.listen(3000, function() {
   var port = server.address().port;
