@@ -1,5 +1,5 @@
-<table st-table="brw.displayBorrowed" st-safe-src="brw.borrowingList.curr" class="table borrowed-table table-striped table-hover table-responsive" >
-  <h5 class="text-center">{{brw.page_title}}</h5>
+<table st-table="brw.displayCurrentBorrowedBooks" st-safe-src="brw.borrowingList.curr" class="table borrowed-table table-striped table-hover table-responsive" >
+  <h5 class="text-center">{{brw.table_title}}</h5>
   <thead>
     <tr>
       <th st-sort="title" class="sortable">Title</th>
@@ -11,7 +11,15 @@
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="book in brw.displayBorrowed">
+    <tr>
+      <th colspan="3">
+        <input type="search" st-search="title" placeholder="Search for Title" class="input-sm form-control" />
+      </th>
+      <th colspan="3">
+        <input type="search" st-search="first_name" placeholder="Search for Lender" class="input-sm form-control" />
+      </th>
+    </tr>
+    <tr ng-repeat="book in brw.displayCurrentBorrowedBooks">
       <td>{{ book.title }} <input type="button" class="btn btn-xs btn-info" title="More Info" ng-click="brw.showInfo(book)" value="More"/></td>
       <td>{{ book.author }}</td>
       <td>{{ book.series }}</td>
@@ -21,9 +29,40 @@
     </tr>
   </tbody>
 </table>
-<div class="history">
-  <h5 class="text-center">Borrowing History</h5>
-  <p ng-repeat="book in brw.borrowingList.past track by $index">
-    <span>Borrowed <i>{{ book.title }}</i> on {{ book.date_initial | date }} from {{ book.first_name }} {{ book.last_name }}, returned on {{ book.date_returned | date }}</span>
-  </p>
+
+<div>
+  <h5 class="text-center expandable" ng-click="showHistory = !showHistory">
+    {{brw.history_title}}
+    <span class="clickto" ng-hide="showHistory">(click to expand)</span>
+    <span class="clickto" ng-show="showHistory">(click to collapse)</span>
+  </h5>
+  <table st-table="brw.displayBorrowedHistory" st-safe-src="brw.borrowingList.past" class="table borrowed-table table-striped table-hover table-responsive" ng-show="showHistory">
+    <thead>
+      <tr>
+        <th></th>
+        <th st-sort="title" class="sortable">Title</th>
+        <th st-sort="last_name" class="sortable">Borrowed From</th>
+        <th st-sort="date_initial" class="sortable">On</th>
+        <th st-sort="due_date" class="sortable">Returned</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+      <tr>
+        <th colspan="2">
+          <input type="search" st-search="title" placeholder="Search by Title" class="input-sm form-control" />
+        </th>
+        <th colspan="3">
+          <input type="search" st-search="first_name" placeholder="Search for Borrower" class="input-sm form-control" />
+        </th>
+      </tr>
+      <tr ng-repeat="book in brw.displayBorrowedHistory">
+        <td>Borrowed</td>
+        <td>{{ book.title }}</td>
+        <td>{{ book.first_name }} {{ book.last_name }}</td>
+        <td>{{ book.date_initial | date}}</td>
+        <td>returned {{ book.date_returned | date }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>

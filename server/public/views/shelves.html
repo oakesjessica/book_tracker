@@ -26,7 +26,7 @@
     </tr>
     <tr ng-repeat="(shelf, booklist) in bookArr">
       <td>
-        <h5 class="expandBooks" ng-click="expandShelf = !expandShelf">{{ shelf }}</h5>
+        <h5 class="expandable" ng-click="expandShelf = !expandShelf">{{ shelf }}</h5>
         <ul ng-show="expandShelf" class="booksInAShelf">
           <li ng-repeat="book in booklist">
             {{ book.title }}

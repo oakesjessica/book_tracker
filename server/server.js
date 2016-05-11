@@ -2,9 +2,10 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var passport = require('passport');
-var session = require('express-session');
-var pg = require('pg');
-var localStrategy = require('passport-local').Strategy;
+var path = require("path");
+var session = require("express-session");
+var pg = require("pg");
+var localStrategy = require("passport-local").Strategy;
 
 //  ROUTE FILES
 var index = require("./routes/index");

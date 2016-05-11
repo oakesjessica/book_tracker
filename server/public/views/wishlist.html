@@ -9,6 +9,17 @@
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <th>
+        <input type="search" st-search="title" placeholder="Search by Title" class="input-sm form-control" />
+      </th>
+      <th>
+        <input type="search" st-search="author" placeholder="Search by Author" class="input-sm form-control" />
+      </th>
+      <th colspan="3">
+        <input type="search" st-search="series" placeholder="Search by Series" class="input-sm form-control" />
+      </th>
+    </tr>
     <tr ng-repeat="book in wish.displayWishlist track by $index">
       <td>{{ book.title }}</td>
       <td>{{ book.author }}</td>

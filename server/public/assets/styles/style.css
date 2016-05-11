@@ -68,7 +68,7 @@ li {
 }
 
 /*Have cursor be a pointer to indicate sortability*/
-.sortable, .expandBooks {
+.sortable, .expandable {
   cursor: pointer;
 }
 
@@ -92,4 +92,8 @@ li {
   font-family: FontAwesome;
   content: "\f0dd";
   color: #0a7e8c;
+}
+
+.clickto {
+  font-size: 10px;
 }

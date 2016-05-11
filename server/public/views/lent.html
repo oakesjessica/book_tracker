@@ -1,5 +1,5 @@
-<table st-table="lent.displayLent" st-safe-src="lent.lendingList.curr" class="table borrowed-table table-striped table-hover table-responsive">
-  <h5 class="text-center">{{lent.page_title}}</h5>
+<table st-table="lent.displayCurrentLentBooks" st-safe-src="lent.lendingList.curr" class="table borrowed-table table-striped table-hover table-responsive">
+  <h5 class="text-center">{{lent.table_title}}</h5>
   <div>
     <input type="button" class="btn btn-xs btn-primary" title="Lend Another Book" value="Lend Another Book" ng-click="lendAnother = true" ng-hide="lendAnother"/>
     <input type="search" class="input-sm" ng-show="lendAnother"/>
@@ -13,10 +13,19 @@
       <th st-sort="series" class="sortable">Series</th>
       <th st-sort="last_name" class="sortable">Lent to</th>
       <th class="text-center" st-sort="due_date">Due Date</th>
+      <th>Returned</th>
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="book in lent.displayLent">
+    <tr>
+      <th colspan="3">
+        <input type="search" st-search="title" placeholder="Search for Title" class="input-sm form-control" />
+      </th>
+      <th colspan="3">
+        <input type="search" st-search="first_name" placeholder="Search for Borrower" class="input-sm form-control" />
+      </th>
+    </tr>
+    <tr ng-repeat="book in lent.displayCurrentLentBooks">
       <td>
         {{ book.title }}
         <input type="button" class="btn btn-xs btn-info" title="More Info" ng-click="brw.openModal()" value="More"/>
@@ -28,15 +37,47 @@
         {{ book.due_date | date }}
         <i class="fa fa-envelope-o" title="Send email to {{ book.first_name }} {{ book.last_name }} re: {{ book.title }}" ng-click="lent.reminder(book)"></i>
       </td>
+      <td><input type="button" class="btn btn-xs btn-danger" title="Book was Returned" value="Return"/></td>
     </tr>
   </tbody>
-</table>
+</table>  <!--Borrowing Table-->
 <div class="history">
-  <h5 class="text-center">Lending History</h5>
-  <p ng-repeat="book in lent.lendingList.past track by $index">
-    <span>Loaned <i>{{ book.title }}</i> on {{ book.date_initial | date }} to {{ book.first_name }} {{ book.last_name }}, returned on {{ book.date_returned | date }}</span>
-  </p>
+  <h5 class="text-center expandable" ng-click="showHistory = !showHistory">
+    {{lent.history_title}}
+    <span class="clickto" ng-hide="showHistory">(click to expand)</span>
+    <span class="clickto" ng-show="showHistory">(click to collapse)</span>
+  </h5>
+  <table st-table="brw.displayLentHistory" st-safe-src="lent.lendingList.past" class="table borrowed-table table-striped table-hover table-responsive" ng-show="showHistory">
+    <thead>
+      <tr>
+        <th></th>
+        <th st-sort="title" class="sortable">Title</th>
+        <th st-sort="last_name" class="sortable">Borrowed From</th>
+        <th st-sort="date_initial" class="sortable">On</th>
+        <th st-sort="due_date" class="sortable">Returned</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+      <tr>
+        <th colspan="2">
+          <input type="search" st-search="title" placeholder="Search by Title" class="input-sm form-control" />
+        </th>
+        <th colspan="3">
+          <input type="search" st-search="first_name" placeholder="Search for Borrower" class="input-sm form-control" />
+        </th>
+      </tr>
+      <tr ng-repeat="book in brw.displayLentHistory">
+        <td>Borrowed</td>
+        <td>{{ book.title }}</td>
+        <td>{{ book.first_name }} {{ book.last_name }}</td>
+        <td>{{ book.date_initial | date}}</td>
+        <td>returned {{ book.date_returned | date }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
+
 
 <div class="modal">
   <div class="modal-dialog">

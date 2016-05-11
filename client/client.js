@@ -136,8 +136,10 @@ app.controller("LocationController", ["BookService", function(BookService) {
 
 app.controller("BorrowController", ["BookService", function(BookService) {
   var vm = this;
-  vm.displayBorrowed = [];
-  vm.page_title = "Books I'm Borrowing";
+  vm.displayCurrentBorrowedBooks = [];
+  vm.displayBorrowedHistory = [];
+  vm.table_title = "Books I'm Borrowing";
+  vm.history_title = "Borrowing History";
   vm.borrowingList = BookService.borrowLentData;
 
   BookService.getBorrowedList();
@@ -152,7 +154,10 @@ app.controller("BorrowController", ["BookService", function(BookService) {
 
 app.controller("LentController", ["BookService", function(BookService) {
   var vm = this;
-  vm.page_title = "Books I've Lent Out";
+  vm.table_title = "Books I'm Lending Out";
+  vm.history_title = "Books I've Lent Out";
+  vm.displayCurrentLentBooks = [];
+  vm.displayLentHistory = [];
   vm.lendingList = BookService.borrowLentData;
 
   BookService.getLentList();
