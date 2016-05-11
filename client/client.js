@@ -147,6 +147,20 @@ app.controller("BorrowController", ["BookService", function(BookService) {
   vm.emailBookOwner = function(book) {
     console.log(book);
     console.log("owner ID", book.book_id, book.owner_id);
+    // $event.stopPropagation();
+  };
+
+  vm.showDetail = function(book) {
+    if (vm.expanded != book.book_id) {
+      vm.expanded = book.book_id;
+    } else {
+      vm.expanded = null;
+    }
+  };
+
+  vm.returnBook = function(book) {
+    console.log(book);
+    // $event.stopPropagation();
   };
 
 
@@ -324,7 +338,6 @@ app.factory("BookService", ["$http", function($http) {
       getWishlist();
     });
   };
-
 
   return {
     key : {title : "value"},
