@@ -223,9 +223,12 @@ app.controller("WishController", ["BookService", function(BookService) {
   BookService.getWishlist();
 
   vm.removeWishHeart = function(book) {
-    console.log(book.book_id);
-    BookService.removeWish(book.book_id);
-  };
+    bootbox.confirm("Are you sure?", function(result) {
+      if (result === true) {
+        BookService.removeWish(book.book_id);
+      }
+    });
+  };  //  removeWishHeart
 }]); //  WishController
 
 app.controller("FaqController", function() {

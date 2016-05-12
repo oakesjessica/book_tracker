@@ -40,6 +40,7 @@ module.exports = function(grunt) {
           "font-awesome/fonts/fontawesome-webfont.woff2",
           "font-awesome/fonts/fontawesome-webfont.woff",
           "font-awesome/fonts/fontawesome-webfont.tff",
+          "jquery/dist/jquery.min.js",
           "moment/min/moment.min.js"
         ],  //  src
         "dest": "server/public/vendors/"
