@@ -150,7 +150,7 @@ app.controller("BorrowController", ["BookService", function(BookService) {
     // $event.stopPropagation();
   };
 
-  vm.showDetail = function(book) {
+  vm.showHideDetails = function(book) {
     if (vm.expanded != book.book_id) {
       vm.expanded = book.book_id;
     } else {
@@ -158,7 +158,7 @@ app.controller("BorrowController", ["BookService", function(BookService) {
     }
   };
 
-  vm.returnBook = function(book) {
+  vm.returnToOwner = function(book) {
     console.log(book);
     // $event.stopPropagation();
   };
@@ -179,6 +179,24 @@ app.controller("LentController", ["BookService", function(BookService) {
   vm.reminder = function(book) {
     console.log(book);
     console.log(book.book_id, book.borrower_id);
+  };
+
+  vm.emailBookBorrower = function(book) {
+    console.log(book);
+    // $event.stopPropagation();
+  };
+
+  vm.showHideDetails = function(book) {
+    if (vm.expanded != book.book_id) {
+      vm.expanded = book.book_id;
+    } else {
+      vm.expanded = null;
+    }
+  };
+
+  vm.returnedFromBorrower = function(book) {
+    console.log(book);
+    // $event.stopPropagation();
   };
 
 }]); //  LentController

@@ -1,59 +1,62 @@
-<table st-table="brw.displayCurrentBorrowedBooks" st-safe-src="brw.borrowingList.curr" class="table borrowed-table table-striped table-hover table-responsive" >
-  <h5 class="text-center">{{brw.table_title}}</h5>
-  <thead>
-    <tr>
-      <th></th>
-      <th st-sort="title" class="sortable">Title</th>
-      <th st-sort="author" class="sortable">Author</th>
-      <th st-sort="series" class="sortable">Series</th>
-      <th st-sort="last_name" class="sortable">Borrowed From</th>
-      <th st-sort="due_date" class="sortable">Due Date</th>
-      <th>Return</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th colspan="4">
-        <input type="search" st-search="title" placeholder="Search for Title" class="input-sm form-control" />
-      </th>
-      <th colspan="3">
-        <input type="search" st-search="first_name" placeholder="Search for Lender" class="input-sm form-control" />
-      </th>
-    </tr>
-    <tr ng-repeat-start="book in brw.displayCurrentBorrowedBooks">
-      <td>
-        <i class="fa fa-lg fa-plus-square-o" ng-hide="brw.expanded == book.book_id" ng-click="brw.showDetail(book)"></i>
-        <i class="fa fa-lg fa-minus-square" ng-show="brw.expanded == book.book_id" ng-click="brw.showDetail(book)"></i>
-      </td>
-      <td>{{ book.title }}</td>
-      <td>{{ book.author }}</td>
-      <td>{{ book.series }}</td>
-      <td>{{ book.first_name }} {{ book.last_name }} on {{ book.date_initial | date}}</td>
-      <td>{{ book.due_date | date }} <i class="fa fa-envelope-o" title="Remind {{ book.first_name }} {{ book.last_name }}" ng-click="brw.emailBookOwner(book)"></i></td>
-      <td>
-        <input type="button" class="btn btn-xs btn-danger" title="Return Book" value="Return" ng-click="brw.returnBook(book)"/>
-      </td>
-    </tr>
-    <tr ng-show="brw.expanded == book.book_id" ng-repeat-end="">
-      <td colspan="7">
-        <div class="col-md-3 col-xs-6">
-          <label>Title</label><span> {{ book.title }}</span> <br />
-          <label>Author</label><span> {{ book.author }}</span> <br />
-          <label>Series</label><span> {{ book.series }}</span> <br />
-          <label>Published</label><span> {{ book.published }}</span> <br />
-          <label>Language</label><span> {{ book.languages }}</span> <br />
-        </div>
-        <div class="col-md-3 col-xs-6">
-          <label>Borrowed From</label><span> {{ book.first_name }} {{ book.last_name }}</span> <br />
-          <label>Email</label><span> {{ book.email }}</span> <br />
-          <label>Due Date</label><span> {{ book.due_date | date }}</span>
-        </div>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="displayTable">
+  <table st-table="brw.displayCurrentBorrowedBooks" st-safe-src="brw.borrowingList.curr" class="table borrowed-table table-striped table-hover table-responsive" >
+    <h5 class="text-center">{{brw.table_title}}</h5>
+    <thead>
+      <tr>
+        <th></th>
+        <th st-sort="title" class="sortable">Title</th>
+        <th st-sort="author" class="sortable">Author</th>
+        <th st-sort="series" class="sortable">Series</th>
+        <th st-sort="last_name" class="sortable">Borrowed From</th>
+        <th st-sort="due_date" class="sortable">Due Date</th>
+        <th>Return</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th colspan="4">
+          <input type="search" st-search="title" placeholder="Search for Title" class="input-sm form-control" />
+        </th>
+        <th colspan="3">
+          <input type="search" st-search="first_name" placeholder="Search for Lender" class="input-sm form-control" />
+        </th>
+      </tr>
+      <tr ng-repeat-start="book in brw.displayCurrentBorrowedBooks">
+        <td>
+          <i class="fa fa-lg fa-plus-square-o" ng-hide="brw.expanded == book.book_id" ng-click="brw.showHideDetails(book)"></i>
+          <i class="fa fa-lg fa-minus-square" ng-show="brw.expanded == book.book_id" ng-click="brw.showHideDetails(book)"></i>
+        </td>
+        <td>{{ book.title }}</td>
+        <td>{{ book.author }}</td>
+        <td>{{ book.series }}</td>
+        <td>{{ book.first_name }} {{ book.last_name }} on {{ book.date_initial | date}}</td>
+        <td>{{ book.due_date | date }} <i class="fa fa-envelope-o" title="Remind {{ book.first_name }} {{ book.last_name }}" ng-click="brw.emailBookOwner(book)"></i></td>
+        <td>
+          <input type="button" class="btn btn-xs btn-danger" title="Return Book" value="Return" ng-click="brw.returnToOwner(book)"/>
+        </td>
+      </tr>
+      <tr ng-show="brw.expanded == book.book_id" ng-repeat-end="">
+        <td colspan="7">
+          <div class="col-md-3 col-xs-6">
+            <label>Title</label><span> {{ book.title }}</span> <br />
+            <label>Author</label><span> {{ book.author }}</span> <br />
+            <label>Series</label><span> {{ book.series }}</span> <br />
+            <label>Published</label><span> {{ book.published }}</span> <br />
+            <label>Language</label><span> {{ book.languages }}</span> <br />
+          </div>
+          <div class="col-md-3 col-xs-6">
+            <label>Borrowed From</label><span> {{ book.first_name }} {{ book.last_name }}</span> <br />
+            <label>Email</label><span> {{ book.email }}</span> <br />
+            <label>Due Date</label><span> {{ book.due_date | date }}</span>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>  <!--Borrowing Table-->
+</div>
 
-<div>
+<!-- History Table -->
+<div class="history">
   <h5 class="text-center expandable" ng-click="showHistory = !showHistory">
     {{brw.history_title}}
     <span class="clickto" ng-hide="showHistory">(click to expand)</span>

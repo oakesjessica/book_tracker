@@ -1,31 +1,34 @@
-<table st-table="wish.displayWishlist" st-safe-src="wish.wishList" class="table wish-table table-striped table-hover table-responsive">
-  <thead>
-    <tr>
-      <th st-sort="title" class="sortable">Title</th>
-      <th st-sort="author" class="sortable">Author</th>
-      <th st-sort="series" class="sortable">Series</th>
-      <th><i class="fa fa-lg fa-heart"></i></th>
-      <th><i class="fa fa-lg fa-book"></i></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>
-        <input type="search" st-search="title" placeholder="Search by Title" class="input-sm form-control" />
-      </th>
-      <th>
-        <input type="search" st-search="author" placeholder="Search by Author" class="input-sm form-control" />
-      </th>
-      <th colspan="3">
-        <input type="search" st-search="series" placeholder="Search by Series" class="input-sm form-control" />
-      </th>
-    </tr>
-    <tr ng-repeat="book in wish.displayWishlist track by $index">
-      <td>{{ book.title }}</td>
-      <td>{{ book.author }}</td>
-      <td>{{ book.series }}</td>
-      <td><i class="fa fa-heart" ng-click="wish.removeWishHeart(book)" title="Remove from Wishlist"></i></td>
-      <td><i class="fa fa-book" ng-click="wish.addToLib(book)"></i></td>
-    </tr>
-  </tbody>
-</table>
+<div class="displayTable">
+  <table st-table="wish.displayWishlist" st-safe-src="wish.wishList" class="table wish-table table-striped table-hover table-responsive">
+    <h5 class="text-center">{{wish.page_title}}</h5>
+    <thead>
+      <tr>
+        <th st-sort="title" class="sortable">Title</th>
+        <th st-sort="author" class="sortable">Author</th>
+        <th st-sort="series" class="sortable">Series</th>
+        <th><i class="fa fa-lg fa-heart"></i></th>
+        <th><i class="fa fa-lg fa-book"></i></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>
+          <input type="search" st-search="title" placeholder="Search by Title" class="input-sm form-control" />
+        </th>
+        <th>
+          <input type="search" st-search="author" placeholder="Search by Author" class="input-sm form-control" />
+        </th>
+        <th colspan="3">
+          <input type="search" st-search="series" placeholder="Search by Series" class="input-sm form-control" />
+        </th>
+      </tr>
+      <tr ng-repeat="book in wish.displayWishlist track by $index">
+        <td>{{ book.title }}</td>
+        <td>{{ book.author }}</td>
+        <td>{{ book.series }}</td>
+        <td><i class="fa fa-heart" ng-click="wish.removeWishHeart(book)" title="Remove from Wishlist"></i></td>
+        <td><i class="fa fa-book" ng-click="wish.addToLib(book)"></i></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

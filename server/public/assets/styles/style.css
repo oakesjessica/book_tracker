@@ -38,7 +38,7 @@ li {
 }
 
 .table {
-  padding: 20px;
+  /*padding: 0px;*/
   border: 1px solid pink;
 }
 
@@ -63,8 +63,8 @@ li {
   transition: all 1s cubic-bezier(0, 1, 0.5, 1);
 }
 
-.history {
-  padding: 0px 20px;
+.history, .displayTable {
+  padding: 0px 15px;
 }
 
 /*Have cursor be a pointer to indicate sortability*/
