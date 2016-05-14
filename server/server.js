@@ -18,6 +18,7 @@ var shelves = require("./routes/shelves");
 var borrowed = require("./routes/borrowed");
 var lent = require("./routes/lent");
 var locations = require("./routes/locations");
+var search = require("./routes/search");
 
 var app = express();
 
@@ -120,6 +121,7 @@ app.use("/shelves", shelves);
 app.use("/borrowed", borrowed);
 app.use("/lent", lent);
 app.use("/locations", locations);
+app.use("/search", search);
 
 // router.use("/login", function(req, res, next) {
 //   if (req.isAuthenticated()) {

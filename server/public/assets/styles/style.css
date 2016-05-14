@@ -55,13 +55,7 @@ li {
 
 }
 
-.booksInAShelf, .booksByLocations {
-  list-style-type: disc;
-  -webkit-transition: all 1s cubic-bezier(0, 1, 0.5, 1);
-  -moz-transition: all 1s cubic-bezier(0, 1, 0.5, 1);
-  -o-transition: all 1s cubic-bezier(0, 1, 0.5, 1);
-  transition: all 1s cubic-bezier(0, 1, 0.5, 1);
-}
+
 
 .history, .displayTable {
   padding: 0px 15px;
@@ -96,4 +90,12 @@ li {
 
 .clickto {
   font-size: 10px;
+}
+
+.searchRows {
+  padding: 20px;
+}
+
+.resultTitle {
+  display: inline;
 }

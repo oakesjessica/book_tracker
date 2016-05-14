@@ -12,7 +12,7 @@ router.get("/", function(req, res) {
       res.status(500).send(err);
     } else {
       var results = [];
-      client.query("SELECT users_books.id, books.id AS book_id, books.title, books.series, books.author, books.languages, books.published, books.locations, " +
+      client.query("SELECT users_books.id, books.id AS book_id, books.title, books.series, books.author, books.languages, books.published, users_books.locations, " +
       "users.first_name, users.last_name, users.id AS user_id " +
       "FROM books " +
       "JOIN users_books ON books.id = users_books.book_id " +

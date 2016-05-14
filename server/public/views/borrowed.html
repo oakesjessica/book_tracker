@@ -7,7 +7,7 @@
         <th st-sort="title" class="sortable">Title</th>
         <th st-sort="author" class="sortable">Author</th>
         <th st-sort="series" class="sortable">Series</th>
-        <th st-sort="last_name" class="sortable">Borrowed From</th>
+        <th st-sort="owner_owner_last_name" class="sortable">Borrowed From</th>
         <th st-sort="due_date" class="sortable">Due Date</th>
         <th>Return</th>
       </tr>
@@ -18,7 +18,7 @@
           <input type="search" st-search="title" placeholder="Search for Title" class="input-sm form-control" />
         </th>
         <th colspan="3">
-          <input type="search" st-search="first_name" placeholder="Search for Lender" class="input-sm form-control" />
+          <input type="search" st-search="owner_first_name" placeholder="Search for Lender" class="input-sm form-control" />
         </th>
       </tr>
       <tr ng-repeat-start="book in brw.displayCurrentBorrowedBooks">
@@ -29,8 +29,8 @@
         <td>{{ book.title }}</td>
         <td>{{ book.author }}</td>
         <td>{{ book.series }}</td>
-        <td>{{ book.first_name }} {{ book.last_name }} on {{ book.date_initial | date}}</td>
-        <td>{{ book.due_date | date }} <i class="fa fa-envelope-o" title="Remind {{ book.first_name }} {{ book.last_name }}" ng-click="brw.emailBookOwner(book)"></i></td>
+        <td>{{ book.owner_first_name }} {{ book.owner_last_name }} on {{ book.date_initial | date}}</td>
+        <td>{{ book.due_date | date }} <i class="fa fa-envelope-o" title="Remind {{ book.owner_first_name }} {{ book.owner_last_name }}" ng-click="brw.emailBookOwner(book)"></i></td>
         <td>
           <input type="button" class="btn btn-xs btn-danger" title="Return Book" value="Return" ng-click="brw.returnToOwner(book)"/>
         </td>
@@ -41,11 +41,14 @@
             <label>Title</label><span> {{ book.title }}</span> <br />
             <label>Author</label><span> {{ book.author }}</span> <br />
             <label>Series</label><span> {{ book.series }}</span> <br />
-            <label>Published</label><span> {{ book.published }}</span> <br />
+            <label>Published</label><span> {{ book.published | date }}</span> <br />
+            <label>Publisher</label><span> {{ book.publisher }}</span> <br />
             <label>Language</label><span> {{ book.languages }}</span> <br />
+            <label>Plot</label><br />
+            <span> {{ book.plot }}</span> <br />
           </div>
           <div class="col-md-3 col-xs-6">
-            <label>Borrowed From</label><span> {{ book.first_name }} {{ book.last_name }}</span> <br />
+            <label>Borrowed From</label><span> {{ book.owner_first_name }} {{ book.owner_last_name }}</span> <br />
             <label>Email</label><span> {{ book.email }}</span> <br />
             <label>Due Date</label><span> {{ book.due_date | date }}</span>
           </div>
@@ -67,7 +70,7 @@
       <tr>
         <th></th>
         <th st-sort="title" class="sortable">Title</th>
-        <th st-sort="last_name" class="sortable">Borrowed From</th>
+        <th st-sort="owner_last_name" class="sortable">Borrowed From</th>
         <th st-sort="date_initial" class="sortable">On</th>
         <th st-sort="due_date" class="sortable">Returned</th>
       </tr>
@@ -79,13 +82,13 @@
           <input type="search" st-search="title" placeholder="Search by Title" class="input-sm form-control" />
         </th>
         <th colspan="3">
-          <input type="search" st-search="first_name" placeholder="Search for Borrower" class="input-sm form-control" />
+          <input type="search" st-search="owner_first_name" placeholder="Search for Borrower" class="input-sm form-control" />
         </th>
       </tr>
       <tr ng-repeat="book in brw.displayBorrowedHistory">
         <td>Borrowed</td>
         <td>{{ book.title }}</td>
-        <td>{{ book.first_name }} {{ book.last_name }}</td>
+        <td>{{ book.owner_first_name }} {{ book.owner_last_name }}</td>
         <td>{{ book.date_initial | date}}</td>
         <td>returned {{ book.date_returned | date }}</td>
       </tr>

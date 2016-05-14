@@ -34,7 +34,7 @@ app.config(["$routeProvider", "$locationProvider", function($routeProvider, $loc
       templateUrl: "views/locations.html",
       controller: "LocationController",
       controllerAs: "loc"
-    })  //  Shelves page
+    })  //  Locations page
     .when("/borrowed", {
       templateUrl: "views/borrowed.html",
       controller: "BorrowController",
@@ -97,24 +97,99 @@ app.controller("RegisterController", ["UserService", function(UserService) {
   };
 }]); //  RegisterController
 
-app.controller("SearchController", function() {
+app.controller("SearchController", ["GoogleAPIService", "BookService", function(GoogleAPIService, BookService) {
   var vm = this;
   vm.page_title = "Search List";
-}); //  SearchController
+  vm.params = {};
+  vm.searchInput = "";
+  vm.searchParameters = ["title", "author", "series"];
+  vm.searchResults = GoogleAPIService.APIdata;
+
+  vm.submitSearch = function() {
+    var paramsInput = vm.searchInput.replace(/ /g, "+");
+    console.log(paramsInput);
+    GoogleAPIService.getAPIResults(paramsInput);
+    vm.searchInput = "";
+  };
+
+  vm.addSearchToLibrary = function(book) {
+    var convertedArray = [];
+    vm.resultInfo = {};
+    vm.resultInfo.title = book.title;
+    vm.resultInfo.authors = book.authors.join(", ");
+
+    if (!book.publishedDate) {
+      vm.resultInfo.published_date = null;
+    } else {
+      vm.resultInfo.published_date = book.publishedDate;
+    }
+    if (!book.publisher) {
+      vm.resultInfo.publisher = null;
+    } else {
+      vm.resultInfo.publisher = book.publisher;
+    }
+    if (!book.categories) {
+      vm.resultInfo.categories = null;
+    } else {
+      vm.resultInfo.categories = book.categories;
+    }
+    if (!book.pageCount) {
+      vm.resultInfo.page_count = null;
+    } else {
+      vm.resultInfo.page_count = book.pageCount;
+    }
+    if (!book.language) {
+      vm.resultInfo.languages = null;
+    } else {
+      vm.resultInfo.languages = book.language;
+    }
+    if (!book.description) {
+      vm.resultInfo.plot = null;
+    } else {
+      vm.resultInfo.plot = book.description;
+    }
+    if (!book.imageLinks) {
+      vm.resultInfo.img_src = null;
+    } else {
+      vm.resultInfo.img_src = book.imageLinks.smallThumbnail;
+    }
+    if (!book.industryIdentifiers) {
+      vm.resultInfo.isbn13 = null;
+      vm.resultInfo.isbn10 = null;
+    } else {
+      for (var k = 0; k < book.industryIdentifiers.length; k++) {
+        if (book.industryIdentifiers[k].type === "ISBN_10") {
+          vm.resultInfo.isbn10 = book.industryIdentifiers[k].identifier;
+        } else if (book.industryIdentifiers[k].type === "ISBN_13") {
+          vm.resultInfo.isbn13 = book.industryIdentifiers[k].identifier;
+        } else {
+          vm.resultInfo.isbn13 = null;
+          vm.resultInfo.isbn10 = null;
+        }
+      }
+    } //  else
+
+    BookService.addToUserLibrary(vm.resultInfo);
+  };  //  addSearchToLibrary
+
+
+}]); //  SearchController
 
 app.controller("LibraryController", ["BookService", function(BookService) {
   var vm = this;
   vm.page_title = "My Library";
   vm.displayLibrary = [];
-  vm.libraryList = BookService.data;
-
+  vm.libraryList = BookService.APIdata;
   BookService.getLibrary();
 
-  console.log("lib", vm.libraryList);
-
-  vm.showInfo = function(book) {
-    console.log(book.book_id, book.user_id);
+  vm.showHideDetails = function(book) {
+    if (vm.expanded != book.book_id) {
+      vm.expanded = book.book_id;
+    } else {
+      vm.expanded = null;
+    }
   };
+
 }]); //  LibraryController
 
 app.controller("ShelvesController", ["BookService", function(BookService) {
@@ -209,8 +284,20 @@ app.controller("FavoriteController", ["BookService", function(BookService) {
 
   BookService.getFavoritesList();
 
+  vm.showHideDetails = function(book) {
+    if (vm.expanded != book.book_id) {
+      vm.expanded = book.book_id;
+    } else {
+      vm.expanded = null;
+    }
+  };
+
   vm.removeFavStar = function(book) {
-    BookService.removeFav(book.book_id);
+    bootbox.confirm("Remove from favorites?", function(result) {
+      if (result === true) {
+        BookService.removeFav(book.book_id);
+      }
+    });
   };  //  vm.removeFav
 }]); //  FavoriteController
 
@@ -223,12 +310,66 @@ app.controller("WishController", ["BookService", function(BookService) {
   BookService.getWishlist();
 
   vm.removeWishHeart = function(book) {
-    bootbox.confirm("Are you sure?", function(result) {
+    bootbox.confirm("Remove from wishlist?", function(result) {
       if (result === true) {
         BookService.removeWish(book.book_id);
       }
     });
   };  //  removeWishHeart
+
+  vm.addToLibrary = function(book) {
+    bootbox.confirm({
+      title: "Add book to My Library",
+      message: "Add <i>" + book.title + "</i> to your library?",
+      buttons: {
+        cancel: {
+          label: "No",
+          className: "btn btn-sm btn-default"
+        },
+        confirm: {
+          label: "Yes",
+          className: "btn btn-sm btn-primary"
+        }
+      },
+      callback: function(result) {
+        if (result === true) {
+          bootbox.dialog({
+            title: "Add book to My Library",
+            message:
+              "<h3>You got the book!</h3>" + "<br/>" + "<br/>" +
+              "<strong>Title:</strong> " + book.title + "<br/>" +
+              "<strong>Author:</strong> " + book.author + "<br/>" +
+              "<strong>Series:</strong> " + book.series + "<br/>" +
+              "<strong>Published:</strong> " + moment(book.published).format("MMM DD, YYYY") + "<br/>" +
+              "<strong>Plot:</strong> Plot goes here",
+            buttons: {
+              cancel: {
+                label: "Actually, nevermind",
+                className: "btn btn-md btn-default",
+              },
+              add: {
+                label: "Yes! Add to Library!",
+                className: "btn btn-md btn-success",
+                callback: function() {
+                  console.log("yes");
+                  BookService.addToUserLibrary(book);
+                }
+              }
+            } //  buttons
+          });
+        } //  if
+      } //  callback
+    }); //  bootbox
+  };  //  vm.addToLibrary
+
+  vm.showHideDetails = function(book) {
+    if (vm.expanded != book.book_id) {
+      vm.expanded = book.book_id;
+    } else {
+      vm.expanded = null;
+    }
+  };
+
 }]); //  WishController
 
 app.controller("FaqController", function() {
@@ -247,6 +388,7 @@ app.factory("UserService", ["$http", "$location", function($http, $location) {
     console.log("newuser", userInfo);
     $http.post("/register", userInfo).then(function(serverResponse) {
       console.log(serverResponse);
+      $location.path("/login");
     });
   };  //  registerNewUser
 
@@ -349,7 +491,7 @@ app.factory("BookService", ["$http", function($http) {
   };
 
   var removeFav = function(bookID) {
-    $http.delete("/favorites/" + bookID).then(function(serverResponse) {
+    $http.put("/favorites/" + bookID).then(function(serverResponse) {
       getFavoritesList();
     });
   };
@@ -357,6 +499,13 @@ app.factory("BookService", ["$http", function($http) {
   var removeWish = function(bookID) {
     $http.delete("/wishlist/" + bookID).then(function(serverResponse) {
       getWishlist();
+    });
+  };
+
+  var addToUserLibrary = function(info) {
+    console.log("adding", info);
+    $http.post("/search", info).then(function(serverResponse) {
+      console.log(serverResponse);
     });
   };
 
@@ -371,7 +520,35 @@ app.factory("BookService", ["$http", function($http) {
     getByLocations : getByLocations,
     removeFav : removeFav,
     removeWish : removeWish,
+    addToUserLibrary : addToUserLibrary,
     data : data,
     borrowLentData : borrowLentData
   };
+}]);
+
+app.factory("GoogleAPIService", ["$http", function($http) {
+
+  var APIdata = [];
+  var getAPIResults = function(params) {
+    var config = {
+      q: params,
+      printType: "books",
+      startIndex: 0,
+      maxResults: 15,
+      callback: JSON,
+      key: process.env.API_KEY
+    };
+    // console.log(config);
+
+    $http.get("https://www.googleapis.com/books/v1/volumes?q=" + params + "&printType=books&startIndex="+config.startIndex+"&maxResults="+config.maxResults+"&key="+config.key).then(function(serverResponse){
+      APIdata.val = serverResponse.data;
+      console.log(APIdata.val);
+    });
+  };
+
+  return {
+    getAPIResults : getAPIResults,
+    APIdata : APIdata
+  };
+
 }]);

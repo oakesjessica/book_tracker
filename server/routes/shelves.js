@@ -13,10 +13,11 @@ router.get("/", function(req, res) {
       res.status(500).send(err);
     } else {
       var results = [];
-      client.query("SELECT * FROM shelves " +
-      "LEFT JOIN book_shelves ON shelves.id = book_shelves.shelf_id " +
-      "LEFT JOIN books ON book_shelves.book_id = books.id " +
-      "WHERE shelves.user_id = $1;", [userInfo.id], function(err, result) {
+      client.query("SELECT * " +
+      "FROM books " +
+      "JOIN book_shelves AS bshelf ON books.id = bshelf.book_id " +
+      "JOIN shelves ON bshelf.shelf_id = shelves.id WHERE shelves.user_id = $1 " +
+      "ORDER BY shelf_name ASC;", [userInfo.id], function(err, result) {
         if (err) {
           console.log(err);
           res.status(500).send(err);

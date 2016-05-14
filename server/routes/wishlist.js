@@ -14,7 +14,8 @@ router.get("/", function(req, res) {
     } else {
       var results = [];
       client.query("SELECT books.id AS book_id, books.title, books.series, books.author, books.languages, " +
-      "books.published, books.locations, users.id AS user_id, users.email FROM books " +
+      "books.published, books.publisher, books.plot, users.id AS user_id, users.email " +
+      "FROM books " +
       "JOIN wishlist ON books.id = wishlist.book_id " +
       "JOIN users ON wishlist.user_id = users.id WHERE users.id = $1;", [userInfo], function(err, result) {
         if (err) {

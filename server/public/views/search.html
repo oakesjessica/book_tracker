@@ -1,1 +1,48 @@
 {{add.page_title}}
+<form ng-submit="add.submitSearch()">
+  <select ng-model="add.parameterType" ng-options="param for param in add.searchParameters"></select>
+  <input type="text" ng-model="add.searchInput" />
+  <input class="btn btn-md btn-success" type="submit" />
+</form>
+
+<div class="row searchRows" ng-repeat="results in add.searchResults.val.items track by $index">
+  <div class="col-md-2 resultImage">
+    <img ng-src="{{ results.volumeInfo.imageLinks.smallThumbnail}}" />
+  </div>
+  <div class="col-md-10">
+    <div class="row">
+      <i class="fa fa-2x fa-plus-circle" ng-click="expanded = !expanded"></i>
+      <h4 class="resultTitle">{{ results.volumeInfo.title }}</h4>
+      <input type="button" class="btn btn-md btn-success" title="Add to Library" value="Add to Library" ng-click="add.addSearchToLibrary(results.volumeInfo)"/>
+      <input type="button" class="btn btn-md btn-primary" title="Add to Wishlist" value="Add to Wishlist" ng-click="add.addSearchToWishlist(results.volumeInfo)" />
+    </div>
+    <div class="row" ng-show="expanded">
+      <div class="col-md-5">
+        <label>Author</label>
+        <p ng-repeat="author in results.volumeInfo.authors">{{ author }}{{$last ? "" : ", "}}</p>
+        <label>Published Date</label>
+        <p>{{ results.volumeInfo.publishedDate }}</p>
+        <label>Publisher</label>
+        <p>{{ results.volumeInfo.publisher }}</p>
+      </div>  <!--1st col-md-4-->
+      <div class="col-md-5">
+        <label>Categories</label>
+        <p ng-repeat="category in results.volumeInfo.categories">{{ category }}{{$last ? "" : ", "}}</p>
+        <label>Page Count</label>
+        <p>{{ results.volumeInfo.pageCount }}</p>
+        <label>Language</label>
+        <p>{{ results.volumeInfo.language }}</p>
+      </div>  <!--2nd col-md-4-->
+      <div class="col-md-2">
+        <label>ISBN-13</label>
+        <p ng-if="results.volumeInfo.industryIdentifiers">{{ results.volumeInfo.industryIdentifiers[0].identifier }}</p>
+        <label>ISBN-10</label>
+        <p>{{ results.volumeInfo.industryIdentifiers[1].identifier }}</p>
+      </div>  <!--3rd col-md-2-->
+    </div>  <!--row-->
+    <div class="row" ng-show="expanded">
+      <label>Plot</label>
+      <p>{{ results.volumeInfo.description }}</p>
+    </div>  <!--Book Info -->
+  </div>  <!--Book Title - col-md-10-->
+</div>  <!--searchRows-->

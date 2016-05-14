@@ -3,20 +3,18 @@
     <h5 class="text-center">{{lib.page_title}}</h5>
     <thead>
       <tr>
+        <th></th>
         <th st-sort="title" class="sortable">Title</th>
         <th st-sort="author" class="sortable">Author</th>
         <th st-sort="series" class="sortable">Series</th>
         <th st-sort="status" class="sortable">Status</th>
         <th st-sort="locations" class="sortable">Location</th>
-        <th>Shelves</th>
-        <th st-sort="favorites"><i class="fa fa-lg fa-star"></i></th>
-        <th st-sort="wishlist"><i class="fa fa-lg fa-heart"></i></th>
         <th><i class="fa fa-lg fa-trash"></i></th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <th>
+        <th colspan="2">
           <input type="search" st-search="title" placeholder="Search by Title" class="input-sm form-control" />
         </th>
         <th>
@@ -25,35 +23,41 @@
         <th>
           <input type="search" st-search="series" placeholder="Search by Series" class="input-sm form-control" />
         </th>
-        <th></th>
         <th>
+          <input type="search" st-search="status" placeholder="Search by Status" class="input-sm form-control" />
+        </th>
+        <th colspan="2">
           <input type="search" st-search="locations" placeholder="Search by Location" class="input-sm form-control" />
         </th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
       </tr>
-      <tr ng-repeat="book in lib.displayLibrary">
+      <tr ng-repeat-start="book in lib.displayLibrary">
         <td>
-          {{ book.title }}
-          <input type="button" class="btn btn-xs btn-info" title="More Info" ng-click="lib.showInfo(book)" value="More"/>
+          <i class="fa fa-lg fa-plus-square-o" ng-hide="lib.expanded == book.book_id" ng-click="lib.showHideDetails(book)"></i>
+          <i class="fa fa-lg fa-minus-square" ng-show="lib.expanded == book.book_id" ng-click="lib.showHideDetails(book)"></i>
         </td>
+        <td>{{ book.title }}</td>
         <td>{{ book.author }}</td>
         <td>{{ book.series }}</td>
         <td>owned, lent to, borrowed</td>
         <td>{{ book.locations }}</td>
-        <td>book shelves</td>
-        <td>
-          <i class="fa fa-star"></i>
-          <i class="fa fa-star-o"></i>
-        </td>
-        <td>
-          <i class="fa fa-heart"></i>
-          <i class="fa fa-heart-o"></i>
-        </td>
         <td>
           <i class="fa fa-trash-o"></i>
+        </td>
+      </tr>
+      <tr ng-show="lib.expanded == book.book_id" ng-repeat-end="">
+        <td colspan="6">
+          <div class="col-md-3 col-xs-6">
+            <i class="fa fa-heart"></i>
+            <i class="fa fa-heart-o"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star-o"></i>
+            <label>Title</label><span> {{ book.title }}</span> <br />
+            <label>Author</label><span> {{ book.author }}</span> <br />
+            <label>Series</label><span> {{ book.series }}</span> <br />
+            <label>Published</label><span> {{ book.published | date }}</span> <br />
+            <label>Language</label><span> {{ book.languages }}</span> <br />
+            book shelves
+          </div>
         </td>
       </tr>
     </tbody>

@@ -3,6 +3,7 @@
     <h5 class="text-center">{{wish.page_title}}</h5>
     <thead>
       <tr>
+        <th></th>
         <th st-sort="title" class="sortable">Title</th>
         <th st-sort="author" class="sortable">Author</th>
         <th st-sort="series" class="sortable">Series</th>
@@ -12,6 +13,7 @@
     </thead>
     <tbody>
       <tr>
+        <th></th>
         <th>
           <input type="search" st-search="title" placeholder="Search by Title" class="input-sm form-control" />
         </th>
@@ -22,12 +24,30 @@
           <input type="search" st-search="series" placeholder="Search by Series" class="input-sm form-control" />
         </th>
       </tr>
-      <tr ng-repeat="book in wish.displayWishlist track by $index">
+      <tr ng-repeat-start="book in wish.displayWishlist">
+        <td>
+          <i class="fa fa-lg fa-plus-square-o" ng-hide="wish.expanded == book.book_id" ng-click="wish.showHideDetails(book)"></i>
+          <i class="fa fa-lg fa-minus-square" ng-show="wish.expanded == book.book_id" ng-click="wish.showHideDetails(book)"></i>
+        </td>
         <td>{{ book.title }}</td>
         <td>{{ book.author }}</td>
         <td>{{ book.series }}</td>
         <td><i class="fa fa-heart" ng-click="wish.removeWishHeart(book)" title="Remove from Wishlist"></i></td>
-        <td><i class="fa fa-book" ng-click="wish.addToLib(book)"></i></td>
+        <td><i class="fa fa-book" ng-click="wish.addToLibrary(book)"></i></td>
+      </tr>
+      <tr ng-show="wish.expanded == book.book_id" ng-repeat-end="">
+        <td colspan="6">
+          <div class="col-md-3 col-xs-6">
+            <label>Title</label><span> {{ book.title }}</span> <br />
+            <label>Author</label><span> {{ book.author }}</span> <br />
+            <label>Series</label><span> {{ book.series }}</span> <br />
+            <label>Published</label><span> {{ book.published | date }}</span> <br />
+            <label>Publisher</label><span> {{ book.publisher }}</span> <br />
+            <label>Language</label><span> {{ book.languages }}</span> <br />
+            <label>Plot</label><br />
+            <span> {{ book.plot }}</span> <br />
+          </div>
+        </td>
       </tr>
     </tbody>
   </table>

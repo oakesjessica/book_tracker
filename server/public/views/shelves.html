@@ -1,22 +1,3 @@
-<!-- <h5>{{ shelf.page_title }}</h5> -->
-<!-- <ul class="shelfNames">
-  <li ng-repeat="(shelf, bookList) in shelf.shelvesList.allShelves">
-    <h5 class="expandBooks" ng-click="showShelves = !showShelves">{{ shelf }}</h5>
-    <ul ng-show="showShelves" class="booksInAShelf">
-      <li ng-repeat="book in bookList">
-        <span>{{ book.title }}</span>
-      </li>
-    </ul>
-  </li>
-</ul> -->
-
-
-<table st-table="shelf.displayShelves" st-safe-src="shelf.shelvesList.allShelves" class="table shelf-table table-striped table-hover table-responsive" >
-  <h5 class="text-center">{{shelf.page_title}}</h5>
-  <thead>
-    <tr>
-      <th st-sort="shelf.displayShelves" class="sortable">Shelf</th>
-    </tr>
   </thead>
   <tbody ng-repeat="bookArr in shelf.displayShelves">
     <tr>
@@ -36,3 +17,53 @@
     </tr>
   </tbody>
 </table>
+
+<div class="displayTable">
+  <table st-table="shelf.displayShelves" st-safe-src="shelf.shelvesList.allShelves" class="table shelf-table table-striped table-hover table-responsive">
+    <h5 class="text-center">{{shelf.page_title}}</h5>
+    <thead>
+      <tr>
+        <th st-sort="shelf.displayShelves" class="sortable">Shelf</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th></th>
+        <th>
+          <input type="search" st-search="title" placeholder="Search by Title" class="input-sm form-control" />
+        </th>
+        <th>
+          <input type="search" st-search="author" placeholder="Search by Author" class="input-sm form-control" />
+        </th>
+        <th colspan="3">
+          <input type="search" st-search="series" placeholder="Search by Series" class="input-sm form-control" />
+        </th>
+      </tr>
+      <tr ng-repeat-start="book in wish.displayWishlist">
+        <td>
+          <i class="fa fa-lg fa-plus-square-o" ng-hide="wish.expanded == book.book_id" ng-click="wish.showHideDetails(book)"></i>
+          <i class="fa fa-lg fa-minus-square" ng-show="wish.expanded == book.book_id" ng-click="wish.showHideDetails(book)"></i>
+        </td>
+        <td>{{ book.title }}</td>
+        <td>{{ book.author }}</td>
+        <td>{{ book.series }}</td>
+        <td><i class="fa fa-heart" ng-click="wish.removeWishHeart(book)" title="Remove from Wishlist"></i></td>
+        <td><i class="fa fa-book" ng-click="wish.addToLibrary(book)"></i></td>
+      </tr>
+      <tr ng-show="wish.expanded == book.book_id" ng-repeat-end="">
+        <td colspan="6">
+          <div class="col-md-3 col-xs-6">
+            <label>Title</label><span> {{ book.title }}</span> <br />
+            <label>Author</label><span> {{ book.author }}</span> <br />
+            <label>Series</label><span> {{ book.series }}</span> <br />
+            <label>Published</label><span> {{ book.published | date }}</span> <br />
+            <label>Publisher</label><span> {{ book.publisher }}</span> <br />
+            <label>Language</label><span> {{ book.languages }}</span> <br />
+            <label>Plot</label><br />
+            <span> {{ book.plot }}</span> <br />
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
