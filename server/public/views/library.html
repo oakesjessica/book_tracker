@@ -38,7 +38,7 @@
         <td>{{ book.title }}</td>
         <td>{{ book.author }}</td>
         <td>{{ book.series }}</td>
-        <td>owned, lent to, borrowed</td>
+        <td><i>Feature coming soon</i></td>
         <td>{{ book.locations }}</td>
         <td>
           <i class="fa fa-trash-o"></i>
@@ -46,17 +46,16 @@
       </tr>
       <tr ng-show="lib.expanded == book.book_id" ng-repeat-end="">
         <td colspan="6">
-          <div class="col-md-3 col-xs-6">
-            <i class="fa fa-heart"></i>
-            <i class="fa fa-heart-o"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star-o"></i>
-            <label>Title</label><span> {{ book.title }}</span> <br />
+          <div class="col-md-6 col-xs-6">
+            <label>Title</label><span> {{ book.title }}</span>
+            <i class="fa fa-2x fa-star" ng-show="book.favorites === true" ng-click="lib.addOrRemoveFav(book, false)"></i>
+            <i class="fa fa-2x fa-star-o" ng-show="book.favorites === false" ng-click="lib.addOrRemoveFav(book, true)"></i> <br />
             <label>Author</label><span> {{ book.author }}</span> <br />
             <label>Series</label><span> {{ book.series }}</span> <br />
             <label>Published</label><span> {{ book.published | date }}</span> <br />
             <label>Language</label><span> {{ book.languages }}</span> <br />
-            book shelves
+            <label>Shelves</label><span><i>  Coming soon</i></span> <br />
+            <label>Plot</label><p>{{ book.plot }}</p>
           </div>
         </td>
       </tr>

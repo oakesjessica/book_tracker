@@ -1,13 +1,20 @@
-<h1>LOGIN PORTAL</h1>
-<form ng-submit = "log.login()">
+<div class="loginPage">
+  <h1>LOGIN</h1>
+  <form ng-submit = "log.login()" class="well loginForm">
+    <div class="loginPortal">
+      <div class="loginInput">
+        <input type="text" name="email" id="email" placeholder="Enter Email" ng-model="log.logInfo.email"/>
+      </div>
+      <div class="loginInput">
+        <input type="password" name="password" id="password" placeholder="Enter Password" ng-model="log.logInfo.password"/>
+      </div>
+      <div class="loginInput">
+        <input type="submit" class="btn btn-med submitBtn"/>
+        <a href="/register" class="navLabels">Register</a>
+      </div>
+    </div>
+  </form>
   <div>
-    <input type="text" name="email" id="email" placeholder="Enter Email" ng-model="log.logInfo.email"/>
+    <i class="fa fa-copyright navLabels" title="Copyright">Jessica Oakes</i>
   </div>
-  <div>
-    <input type="password" name="password" id="password" placeholder="Enter Password" ng-model="log.logInfo.password"/>
-  </div>
-  <div>
-    <input type="submit" class="btn btn-med btn-success"/>
-    <a href="/register">Register</a>
-  </div>
-</form>
+</div>

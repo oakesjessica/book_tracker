@@ -44,7 +44,7 @@
       </tr>
       <tr ng-show="lent.expanded == book.book_id" ng-repeat-end="">
         <td colspan="7">
-          <div class="col-md-3 col-xs-6">
+          <div class="col-md-5 col-xs-6">
             <label>Title</label><span> {{ book.title }}</span> <br />
             <label>Author</label><span> {{ book.author }}</span> <br />
             <label>Series</label><span> {{ book.series }}</span> <br />
@@ -54,7 +54,7 @@
             <label>Plot</label><br />
             <span> {{ book.plot }}</span> <br />
           </div>
-          <div class="col-md-3 col-xs-6">
+          <div class="col-md-5 col-xs-6">
             <label>Lent To </label><span> {{ book.borrower_first_name }} {{ book.borrower_last_name }}</span> <br />
             <label>Email</label><span> {{ book.email }}</span> <br />
             <label>Due Date</label><span> {{ book.due_date | date }}</span>

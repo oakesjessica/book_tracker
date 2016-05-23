@@ -41,7 +41,7 @@ router.post("/", function(req, res) {
                 res.status(500).send(err);
                 process.exit(1);
               } else {
-                client.query("INSERT INTO users_books (user_id, book_id) " +
+                client.query("INSERT INTO " + req.body.table + " (user_id, book_id) " +
                 "VALUES ($1, $2);", [userInfo.id, result.rows[0].id], function(err) {
                   if (err) {
                     console.log("Inserting into users_books error", err);
@@ -54,13 +54,14 @@ router.post("/", function(req, res) {
               }
             });
           } else {
-            client.query("INSERT INTO users_books (user_id, book_id) " +
+            client.query("INSERT INTO " + req.body.table + " (user_id, book_id) " +
             "VALUES ($1, $2);", [userInfo.id, result.rows[0].id], function(err) {
               if (err) {
                 console.log(err);
                 res.status(500).send(err);
                 process.exit(1);
               } else {
+                res.sendStatus(200);
                 done();
               }
             });

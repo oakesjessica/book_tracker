@@ -27,17 +27,17 @@
   </head>
   <body class="container-fluid" ng-controller="MainController as main">
     <header>
-      <nav class="navbar">
-        <div class="navbar-header">
+      <nav class="navbar navbar-default">
+        <div class="navs container-fluid">
           <h3>Book Tracker</h3>
           <ul class="nav">
-            <li title="Add to Library" aria-label="Search books to add to library">
+            <li title="Search" aria-label="Search books to add to library">
               <a href="/search">
                 <p class="p-nav">
                   <i class="fa fa-lg fa-nav fa-search"></i>
                 </p>
                 <p class="p-nav" ng-hide="minimized">
-                  Add to Library
+                  <span class="navLabels">Search</span>
                 </p>
               </a>
             </li>
@@ -47,7 +47,7 @@
                   <i class="fa fa-lg fa-nav fa-university"></i>
                 </p>
                 <p class="p-nav" ng-hide="minimized">
-                  My Library
+                  <span class="navLabels">My Library</span>
                 </p>
               </a>
             </li>
@@ -57,7 +57,7 @@
                   <i class="fa fa-lg fa-nav fa-book"></i>
                 </p>
                 <p class="p-nav" ng-hide="minimized">
-                  My Shelves
+                  <span class="navLabels">My Shelves</span>
                 </p>
               </a>
             </li>
@@ -67,7 +67,7 @@
                   <i class="fa fa-lg fa-nav fa-map-o"></i>
                 </p>
                 <p class="p-nav" ng-hide="minimized">
-                  Locations
+                  <span class="navLabels">Locations</span>
                 </p>
               </a>
             </li>
@@ -77,7 +77,7 @@
                   <i class="fa fa-lg fa-nav fa-bold"></i>
                 </p>
                 <p class="p-nav" ng-hide="minimized">
-                  Borrowed
+                  <span class="navLabels">Borrowed</span>
                 </p>
               </a>
             </li>
@@ -87,7 +87,7 @@
                   <i class="fa fa-lg fa-nav fa-user"></i>
                 </p>
                 <p class="p-nav" ng-hide="minimized">
-                  Lent
+                  <span class="navLabels">Lent</span>
                 </p>
               </a>
             </li>
@@ -97,7 +97,7 @@
                   <i class="fa fa-lg fa-nav fa-star"></i>
                 </p>
                 <p class="p-nav" ng-hide="minimized">
-                  Favorites
+                  <span class="navLabels">Favorites</span>
                 </p>
               </a>
             </li>
@@ -107,7 +107,7 @@
                   <i class="fa fa-lg fa-nav fa-gift"></i>
                 </p>
                 <p class="p-nav" ng-hide="minimized">
-                  Wish List
+                  <span class="navLabels">Wish List</span>
                 </p>
               </a>
             </li>
@@ -117,7 +117,7 @@
                   <i class="fa fa-lg fa-nav fa-question"></i>
                 </p>
                 <p class="p-nav" ng-hide="minimized">
-                  Help/FAQ
+                  <span class="navLabels">Help/FAQ</span>
                 </p>
               </a>
             </li>
@@ -127,7 +127,7 @@
                   <i class="fa fa-lg fa-nav fa-angle-double-up" title="Minimize" aria-label="Minimize sidebar"></i>
                 </p>
                 <p class="p-nav">
-                  Minimize
+                  <span class="navLabels">Minimize</span>
                 </p>
               </a>
               <a href="" ng-show="minimized" ng-click="minimized = false" title="Expand" aria-label="Expand sidebar">
@@ -142,7 +142,7 @@
                   <i class="fa fa-lg fa-nav fa-sign-in" title="Login" aria-label="Login/Register to account for full access" ></i>
                 </p>
                 <p class="p-nav" ng-hide="minimized" title="Login/Register" aria-label="Login/Register to account for full access">
-                  Login
+                  <span class="navLabels">Login</span>
                 </p>
               </a>
 
@@ -152,7 +152,7 @@
                   <i class="fa fa-lg fa-nav fa-sign-out" title="Log Out" aria-label="Logout of account"></i>
                 </p>
                 <p class="p-nav" ng-hide="minimized" title="Log Out" aria-label="Logout of account">
-                  Logout
+                  <span class="navLabels">Logout</span>
                 </p>
               </a>
             </li>
@@ -163,9 +163,6 @@
     <div ng-view>
     </div>
     <footer>
-      <div>
-        <i class="fa fa-copyright" title="Copyright"></i>
-      </div>
     </footer>
   </body> <!--body-->
 </html>

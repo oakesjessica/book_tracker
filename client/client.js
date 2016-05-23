@@ -115,6 +115,7 @@ app.controller("SearchController", ["GoogleAPIService", "BookService", function(
   vm.addSearchToLibrary = function(book) {
     var convertedArray = [];
     vm.resultInfo = {};
+    vm.resultInfo.table = "users_books";
     vm.resultInfo.title = book.title;
     vm.resultInfo.authors = book.authors.join(", ");
 
@@ -172,14 +173,75 @@ app.controller("SearchController", ["GoogleAPIService", "BookService", function(
     BookService.addToUserLibrary(vm.resultInfo);
   };  //  addSearchToLibrary
 
+  vm.addSearchToWishlist = function(book) {
+    var convertedArray = [];
+    vm.resultInfo = {};
+    vm.resultInfo.table = "wishlist";
+    vm.resultInfo.title = book.title;
+    vm.resultInfo.authors = book.authors.join(", ");
 
+    if (!book.publishedDate) {
+      vm.resultInfo.published_date = null;
+    } else {
+      vm.resultInfo.published_date = book.publishedDate;
+    }
+    if (!book.publisher) {
+      vm.resultInfo.publisher = null;
+    } else {
+      vm.resultInfo.publisher = book.publisher;
+    }
+    if (!book.categories) {
+      vm.resultInfo.categories = null;
+    } else {
+      vm.resultInfo.categories = book.categories;
+    }
+    if (!book.pageCount) {
+      vm.resultInfo.page_count = null;
+    } else {
+      vm.resultInfo.page_count = book.pageCount;
+    }
+    if (!book.language) {
+      vm.resultInfo.languages = null;
+    } else {
+      vm.resultInfo.languages = book.language;
+    }
+    if (!book.description) {
+      vm.resultInfo.plot = null;
+    } else {
+      vm.resultInfo.plot = book.description;
+    }
+    if (!book.imageLinks) {
+      vm.resultInfo.img_src = null;
+    } else {
+      vm.resultInfo.img_src = book.imageLinks.smallThumbnail;
+    }
+    if (!book.industryIdentifiers) {
+      vm.resultInfo.isbn13 = null;
+      vm.resultInfo.isbn10 = null;
+    } else {
+      for (var k = 0; k < book.industryIdentifiers.length; k++) {
+        if (book.industryIdentifiers[k].type === "ISBN_10") {
+          vm.resultInfo.isbn10 = book.industryIdentifiers[k].identifier;
+        } else if (book.industryIdentifiers[k].type === "ISBN_13") {
+          vm.resultInfo.isbn13 = book.industryIdentifiers[k].identifier;
+        } else {
+          vm.resultInfo.isbn13 = null;
+          vm.resultInfo.isbn10 = null;
+        }
+      }
+    } //  else
+
+    BookService.addToUserLibrary(vm.resultInfo);
+  };  //  addSearchToLibrary
 }]); //  SearchController
 
 app.controller("LibraryController", ["BookService", function(BookService) {
   var vm = this;
   vm.page_title = "My Library";
   vm.displayLibrary = [];
-  vm.libraryList = BookService.APIdata;
+  vm.libraryList = BookService.data;
+  vm.bookInfo = {};
+
   BookService.getLibrary();
 
   vm.showHideDetails = function(book) {
@@ -188,6 +250,13 @@ app.controller("LibraryController", ["BookService", function(BookService) {
     } else {
       vm.expanded = null;
     }
+  };
+
+  vm.addOrRemoveFav = function(book, status) {
+    vm.bookInfo = book;
+    vm.bookInfo.change = status;
+    BookService.changeStar(vm.bookInfo);
+    console.log(book);
   };
 
 }]); //  LibraryController
@@ -398,7 +467,7 @@ app.factory("UserService", ["$http", "$location", function($http, $location) {
       console.log(serverResponse);
       if (serverResponse.status === 200) {
         data.login = true;
-        $location.path("/borrowed");
+        $location.path("/library");
       } else {
         //  error message
         data.login = false;
@@ -496,6 +565,13 @@ app.factory("BookService", ["$http", function($http) {
     });
   };
 
+  var changeStar = function(book) {
+    console.log(book);
+    $http.put("/library/fav/", book).then(function(serverResponse) {
+      getLibrary();
+    });
+  };
+
   var removeWish = function(bookID) {
     $http.delete("/wishlist/" + bookID).then(function(serverResponse) {
       getWishlist();
@@ -519,6 +595,7 @@ app.factory("BookService", ["$http", function($http) {
     getByShelves : getByShelves,
     getByLocations : getByLocations,
     removeFav : removeFav,
+    changeStar : changeStar,
     removeWish : removeWish,
     addToUserLibrary : addToUserLibrary,
     data : data,
@@ -536,7 +613,7 @@ app.factory("GoogleAPIService", ["$http", function($http) {
       startIndex: 0,
       maxResults: 15,
       callback: JSON,
-      key: process.env.API_KEY
+      key: "AIzaSyDSxeiYZwfKcwxfPkUiVLpKHKJEEfvjwWA"
     };
     // console.log(config);
 
