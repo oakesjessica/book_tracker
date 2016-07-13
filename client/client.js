@@ -613,7 +613,7 @@ app.factory("GoogleAPIService", ["$http", function($http) {
       startIndex: 0,
       maxResults: 15,
       callback: JSON,
-      key: "AIzaSyDSxeiYZwfKcwxfPkUiVLpKHKJEEfvjwWA"
+      key: "AIzaSyDSxeiYZwfKcwxfPkUiVLpKHKJEEfvjwWA"  //   // register your own key at https://developers.google.com/
     };
     // console.log(config);
 
