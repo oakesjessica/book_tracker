@@ -34,6 +34,7 @@ password varchar(80) NOT NULL);
 --
 CREATE TABLE users_books (
 id serial PRIMARY KEY,
+wishlist BOOLEANm
 book_id INT REFERENCES books(id),
 user_id INT REFERENCES users(id));
 
