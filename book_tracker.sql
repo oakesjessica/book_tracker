@@ -1,5 +1,6 @@
 --  SQL CREATION
 -- DATABASE : book_tracker
+-- Copy/paste queries
 -- Press CMD-OPT-RTRN to run
 
 --
