@@ -8,3 +8,4 @@ This project was developed as part of the curriculum of Prime Digital Academy in
 ## Demo
 
 ## What I Learned
+## Tech
