@@ -23,7 +23,8 @@ var search = require("./routes/search");
 var app = express();
 
 var encryptLib = require('../modules/encryption');
-var connectionString = 'postgres://localhost:5432/book_tracker';
+var initializeDB = require('../modules/dbconnection').initializeDB;
+var connectionString = require('../modules/dbconnection').connectionString;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));

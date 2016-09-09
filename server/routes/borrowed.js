@@ -2,7 +2,7 @@
 var router = require("express").Router();
 var pg = require("pg");
 
-var connectionString = "postgres://localhost:5432/book_tracker";
+var connectionString = require('../../modules/dbconnection').connectionString;
 
 router.get("/", function(req, res) {
   var userInfo = req.user;

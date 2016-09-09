@@ -5,7 +5,7 @@ var path = require("path");
 var pg = require("pg");
 
 var encryptLib = require("../../modules/encryption");
-var connectionString = "postgres://localhost:5432/book_tracker";
+var connectionString = require('../../modules/dbconnection').connectionString;
 
 router.get("/", function(req, res, next) {
   res.sendFile(path.resolve(__dirname, "../public/views/register.html"));

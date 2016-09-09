@@ -1,7 +1,7 @@
 var router = require("express").Router();
 var pg = require("pg");
 
-var connectionString = "postgres://localhost:5432/book_tracker";
+var connectionString = require('../../modules/dbconnection').connectionString;
 
 router.get("/", function(req, res) {
   var userInfo = req.user;
@@ -13,7 +13,7 @@ router.get("/", function(req, res) {
     } else {
       var results = [];
       client.query("SELECT users_books.id, books.id AS book_id, books.title, books.series, books.author, books.languages, " +
-      "books.published, books.publisher, books.plot, books.img_src, books.isbn13, books.isbn10, " + 
+      "books.published, books.publisher, books.plot, books.img_src, books.isbn13, books.isbn10, " +
       "users_books.locations, users_books.favorites, " +
       "users.first_name, users.last_name, users.id AS user_id " +
       "FROM books " +
