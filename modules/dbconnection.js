@@ -25,21 +25,28 @@ function initializeDB(){
           'title varchar(80), ' +
           'author varchar(80), ' +
           'series varchar(80), ' +
-          'language varchar(20), ' +
+          'languages varchar(20), ' +
           'published DATE, ' +
-          'location varchar(80));';
+          'publisher varchar(30), ' +
+          'plot varchar(300), ' +
+          'isbn13 varchar(14), ' +
+          'isbn10 varchar(11), ' +
+          'page_count integer, ' +
+          'img_src varchar(200), ' +
+          'locations varchar(80));';
 
         users = 'CREATE TABLE IF NOT EXISTS users ( ' +
           'id serial PRIMARY KEY, ' +
           'first_name varchar(80) NOT NULL, ' +
           'last_name varchar(80) NOT NULL, ' +
           'email varchar(100) NOT NULL UNIQUE, ' +
-          'username varchar(20) NOT NULL UNIQUE, ' +
           'password varchar(80) NOT NULL);';
 
         users_books = 'CREATE TABLE IF NOT EXISTS users_books ( ' +
           'id serial PRIMARY KEY, ' +
           'wishlist BOOLEAN, ' +
+          'locations varchar(100), ' +
+          'favorites BOOLEAN, ' + 
           'book_id INT REFERENCES books(id), ' +
           'user_id INT REFERENCES users(id));';
 
@@ -74,7 +81,7 @@ function initializeDB(){
           'shelf_id INT REFERENCES shelves(id));';
 
         session = 'CREATE TABLE IF NOT EXISTS session ( ' +
-        'id VARCHAR NOT NULL PRIMARY KEY, ' +
+        'sid VARCHAR NOT NULL PRIMARY KEY, ' +
         'sess JSON NOT NULL, ' +
         'expire TIMESTAMP(6) NOT NULL) WITH (OIDS=FALSE);';
 

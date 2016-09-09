@@ -35,7 +35,8 @@ app.use(express.static("server/public"));
 //  Passport Configuration
 app.use(session({
   store: new pgSession({
-    connString: connectionString
+    pg: pg,
+    conString: connectionString
   }),
   secret : "secret",
   resave : true,
@@ -141,7 +142,7 @@ app.use("/search", search);
 app.use("/login", login);
 
 app.get("/*", function(req, res) {
-  res.sendFile(path.join(__dirname, "../public/views/index.html"));
+  res.sendFile(path.join(__dirname, "./public/views/index.html"));
 });
 
 

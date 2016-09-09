@@ -27,7 +27,6 @@ id serial PRIMARY KEY,
 first_name varchar(80) NOT NULL,
 last_name varchar(80) NOT NULL,
 email varchar(100) NOT NULL UNIQUE,
-username varchar(20) NOT NULL UNIQUE,
 password varchar(80) NOT NULL);
 
 --
