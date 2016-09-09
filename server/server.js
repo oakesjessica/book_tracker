@@ -7,6 +7,7 @@ var session = require("express-session");
 var pg = require("pg");
 var pgSession = require('connect-pg-simple')(session);
 var localStrategy = require("passport-local").Strategy;
+var port = 3000 || process.env.PORT;
 
 //  ROUTE FILES
 var index = require("./routes/index");
@@ -144,7 +145,7 @@ app.get("/*", function(req, res) {
 });
 
 
-var server = app.listen(3000 || process.env.PORT, function() {
+var server = app.listen(port, function() {
   var port = server.address().port;
   console.log("Listening on port", port, ". Ctrl-C to exit.");
 });
