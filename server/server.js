@@ -30,6 +30,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("server/public"));
 
+initializeDB();
+
 //  Passport Configuration
 app.use(session({
   secret : "secret",
