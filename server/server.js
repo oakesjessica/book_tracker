@@ -7,7 +7,7 @@ var session = require("express-session");
 var pg = require("pg");
 var pgSession = require('connect-pg-simple')(session);
 var localStrategy = require("passport-local").Strategy;
-var port = 3000 || process.env.PORT;
+var port = process.env.PORT || 3000;
 
 //  ROUTE FILES
 var index = require("./routes/index");
