@@ -107,7 +107,6 @@ app.controller("SearchController", ["GoogleAPIService", "BookService", function(
 
   vm.submitSearch = function() {
     var paramsInput = vm.searchInput.replace(/ /g, "+");
-    // console.log(paramsInput);
     GoogleAPIService.getAPIResults(paramsInput);
     vm.searchInput = "";
   };
