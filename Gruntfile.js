@@ -45,12 +45,6 @@ module.exports = function(grunt) {
         ],  //  src
         "dest": "server/public/vendors/"
       }, //  main
-      // files: {
-      //   expand: true,
-      //   cwd: "node_modules/bootstrap/dist/fonts",
-      //   src: "**/*",
-      //   "dest": "server/public/vendors/bootstrap/dist/fonts"
-      // } //  files
     } //  copy
   });  //  grunt.initConfig
 
