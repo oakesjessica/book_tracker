@@ -21,7 +21,7 @@ function initializeDB(){
 
         var books, users, users_books, borrowed_and_lent, wishlist, favorites, shelves, book_shelves;
 
-        books = 'CREATE TABLE books ( ' +
+        books = 'CREATE TABLE books IF NOT EXISTS ( ' +
           'id serial PRIMARY KEY, ' +
           'title varchar(80), ' +
           'author varchar(80), ' +
@@ -30,7 +30,7 @@ function initializeDB(){
           'published DATE, ' +
           'location varchar(80));';
 
-        users = 'CREATE TABLE users ( ' +
+        users = 'CREATE TABLE users IF NOT EXISTS ( ' +
           'id serial PRIMARY KEY, ' +
           'first_name varchar(80) NOT NULL, ' +
           'last_name varchar(80) NOT NULL, ' +
@@ -38,13 +38,13 @@ function initializeDB(){
           'username varchar(20) NOT NULL UNIQUE, ' +
           'password varchar(80) NOT NULL);';
 
-        users_books = 'CREATE TABLE users_books ( ' +
+        users_books = 'CREATE TABLE users_books IF NOT EXISTS ( ' +
           'id serial PRIMARY KEY, ' +
           'wishlist BOOLEAN ' +
           'book_id INT REFERENCES books(id), ' +
           'user_id INT REFERENCES users(id));';
 
-        borrowed_and_lent = 'CREATE TABLE borrowed_and_lent ( ' +
+        borrowed_and_lent = 'CREATE TABLE borrowed_and_lent IF NOT EXISTS ( ' +
           'id serial PRIMARY KEY, ' +
           'date_initial date, ' +
           'date_returned date, ' +
@@ -53,22 +53,22 @@ function initializeDB(){
           'borrowed_from INT REFERENCES users(id), ' +
           'book_id INT REFERENCES books(id));';
 
-        wishlist = 'CREATE TABLE wishlist ( ' +
+        wishlist = 'CREATE TABLE wishlist IF NOT EXISTS ( ' +
           'id serial PRIMARY KEY, ' +
           'book_id INT REFERENCES books(id), ' +
           'user_id INT REFERENCES users(id));';
 
-        favorites = 'CREATE TABLE favorites ( ' +
+        favorites = 'CREATE TABLE favorites IF NOT EXISTS ( ' +
           'id serial PRIMARY KEY, ' +
           'book_id INT REFERENCES books(id), ' +
           'user_id INT REFERENCES users(id));';
 
-        shelves = 'CREATE TABLE shelves ( ' +
+        shelves = 'CREATE TABLE shelves IF NOT EXISTS ( ' +
           'id serial PRIMARY KEY, ' +
           'shelf_name varchar(100), ' +
           'user_id INT REFERENCES users(id));';
 
-        book_shelves = 'CREATE TABLE book_shelves ( ' +
+        book_shelves = 'CREATE TABLE book_shelves IF NOT EXISTS ( ' +
           'id serial PRIMARY KEY, ' +
           'user_id INT REFERENCES users(id), ' +
           'book_id INT REFERENCES books(id), ' +
