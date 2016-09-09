@@ -5,6 +5,7 @@ var passport = require('passport');
 var path = require("path");
 var session = require("express-session");
 var pg = require("pg");
+var pgSession = require('connect-pg-simple')(session);
 var localStrategy = require("passport-local").Strategy;
 
 //  ROUTE FILES
@@ -34,6 +35,9 @@ initializeDB();
 
 //  Passport Configuration
 app.use(session({
+  store: new pgSession({
+    connString: connectionString
+  }),
   secret : "secret",
   resave : true,
   saveUninitialized : false,
