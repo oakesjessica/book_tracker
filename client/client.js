@@ -72,7 +72,7 @@ app.controller("MainController", ["UserService", function(UserService) {
   var vm = this;
 
   vm.loginStatusData = UserService.data;
-  console.log(vm.loginStatus);
+  // console.log(vm.loginStatus);
 
 }]);
 
@@ -81,7 +81,7 @@ app.controller("LoginController", ["UserService", function(UserService) {
 
   vm.logInfo = {};
   vm.login = function() {
-    console.log(vm.logInfo);
+    // console.log(vm.logInfo);
     UserService.loginUser(vm.logInfo);
   };
 }]); //  LoginController
@@ -91,7 +91,7 @@ app.controller("RegisterController", ["UserService", function(UserService) {
 
   vm.newUser = {};
   vm.regUser = function() {
-    console.log(vm.newUser);
+    // console.log(vm.newUser);
     UserService.registerNewUser(vm.newUser);
     vm.newUser = {};
   };
@@ -107,7 +107,7 @@ app.controller("SearchController", ["GoogleAPIService", "BookService", function(
 
   vm.submitSearch = function() {
     var paramsInput = vm.searchInput.replace(/ /g, "+");
-    console.log(paramsInput);
+    // console.log(paramsInput);
     GoogleAPIService.getAPIResults(paramsInput);
     vm.searchInput = "";
   };
@@ -256,7 +256,7 @@ app.controller("LibraryController", ["BookService", function(BookService) {
     vm.bookInfo = book;
     vm.bookInfo.change = status;
     BookService.changeStar(vm.bookInfo);
-    console.log(book);
+    // console.log(book);
   };
 
 }]); //  LibraryController
@@ -289,8 +289,8 @@ app.controller("BorrowController", ["BookService", function(BookService) {
   BookService.getBorrowedList();
 
   vm.emailBookOwner = function(book) {
-    console.log(book);
-    console.log("owner ID", book.book_id, book.owner_id);
+    // console.log(book);
+    // console.log("owner ID", book.book_id, book.owner_id);
     // $event.stopPropagation();
   };
 
@@ -303,7 +303,7 @@ app.controller("BorrowController", ["BookService", function(BookService) {
   };
 
   vm.returnToOwner = function(book) {
-    console.log(book);
+    // console.log(book);
     // $event.stopPropagation();
   };
 
@@ -321,12 +321,12 @@ app.controller("LentController", ["BookService", function(BookService) {
   BookService.getLentList();
 
   vm.reminder = function(book) {
-    console.log(book);
-    console.log(book.book_id, book.borrower_id);
+    // console.log(book);
+    // console.log(book.book_id, book.borrower_id);
   };
 
   vm.emailBookBorrower = function(book) {
-    console.log(book);
+    // console.log(book);
     // $event.stopPropagation();
   };
 
@@ -339,7 +339,7 @@ app.controller("LentController", ["BookService", function(BookService) {
   };
 
   vm.returnedFromBorrower = function(book) {
-    console.log(book);
+    // console.log(book);
     // $event.stopPropagation();
   };
 
@@ -420,7 +420,7 @@ app.controller("WishController", ["BookService", function(BookService) {
                 label: "Yes! Add to Library!",
                 className: "btn btn-md btn-success",
                 callback: function() {
-                  console.log("yes");
+                  // console.log("yes");
                   BookService.addToUserLibrary(book);
                 }
               }
@@ -454,17 +454,17 @@ app.factory("UserService", ["$http", "$location", function($http, $location) {
   var data = {};
 
   registerNewUser = function(userInfo) {
-    console.log("newuser", userInfo);
+    // console.log("newuser", userInfo);
     $http.post("/register", userInfo).then(function(serverResponse) {
-      console.log(serverResponse);
+      // console.log(serverResponse);
       $location.path("/login");
     });
   };  //  registerNewUser
 
   loginUser = function(userInfo) {
-    console.log("logging in", userInfo);
+    // console.log("logging in", userInfo);
     $http.post("/", userInfo).then(function(serverResponse) {
-      console.log(serverResponse);
+      // console.log(serverResponse);
       if (serverResponse.status === 200) {
         data.login = true;
         $location.path("/library");
@@ -549,7 +549,7 @@ app.factory("BookService", ["$http", function($http) {
   var getByShelves = function() {
     $http.get("/shelves").then(function(serverResponse) {
       data.allShelves = filterAndSort(serverResponse.data, "shelf_name");
-      console.log(data.allShelves);
+      // console.log(data.allShelves);
     });
   };
 
@@ -566,7 +566,7 @@ app.factory("BookService", ["$http", function($http) {
   };
 
   var changeStar = function(book) {
-    console.log(book);
+    // console.log(book);
     $http.put("/library/fav/", book).then(function(serverResponse) {
       getLibrary();
     });
@@ -579,9 +579,9 @@ app.factory("BookService", ["$http", function($http) {
   };
 
   var addToUserLibrary = function(info) {
-    console.log("adding", info);
+    // console.log("adding", info);
     $http.post("/search", info).then(function(serverResponse) {
-      console.log(serverResponse);
+      // console.log(serverResponse);
     });
   };
 
@@ -619,7 +619,7 @@ app.factory("GoogleAPIService", ["$http", function($http) {
 
     $http.get("https://www.googleapis.com/books/v1/volumes?q=" + params + "&printType=books&startIndex="+config.startIndex+"&maxResults="+config.maxResults+"&key="+config.key).then(function(serverResponse){
       APIdata.val = serverResponse.data;
-      console.log(APIdata.val);
+      // console.log(APIdata.val);
     });
   };
 

@@ -26,9 +26,9 @@ function initializeDB(){
           'author varchar(80), ' +
           'series varchar(80), ' +
           'languages varchar(20), ' +
-          'published DATE, ' +
-          'publisher varchar(30), ' +
-          'plot varchar(300), ' +
+          'published varchar(20), ' +
+          'publisher varchar(60), ' +
+          'plot varchar(900), ' +
           'isbn13 varchar(14), ' +
           'isbn10 varchar(11), ' +
           'page_count integer, ' +
@@ -46,7 +46,7 @@ function initializeDB(){
           'id serial PRIMARY KEY, ' +
           'wishlist BOOLEAN, ' +
           'locations varchar(100), ' +
-          'favorites BOOLEAN, ' + 
+          'favorites BOOLEAN, ' +
           'book_id INT REFERENCES books(id), ' +
           'user_id INT REFERENCES users(id));';
 
@@ -55,8 +55,9 @@ function initializeDB(){
           'date_initial date, ' +
           'date_returned date, ' +
           'status boolean, ' +
-          'lent_to INT REFERENCES users(id), ' +
-          'borrowed_from INT REFERENCES users(id), ' +
+          'media_owner INT REFERENCES users(id), ' +
+          'borrower INT REFERENCES users(id), ' +
+          'due_date date, ' +
           'book_id INT REFERENCES books(id));';
 
         wishlist = 'CREATE TABLE IF NOT EXISTS wishlist ( ' +

@@ -16,7 +16,7 @@ router.get("/", function(req, res) {
       //  Query list of books session user (the borrower) is/has borrowed from others
       client.query("SELECT sessionUser.id AS sessionuser_id, bl.status, " +
       "bl.date_initial, bl.date_returned, bl.due_date, " +
-      "owners.id AS owner_id, owners.first_name AS owner_first_name, owners.last_name AS owner_last_name, owners.email, owners.username, " +
+      "owners.id AS owner_id, owners.first_name AS owner_first_name, owners.last_name AS owner_last_name, owners.email, " +
       "books.id AS book_id, books.title, books.series, books.author, books.languages, books.published, books.publisher, books.plot, " +
       "ub.locations, ub.favorites, books.isbn13, books.isbn10 " +
       "FROM borrowed_and_lent AS bl " +

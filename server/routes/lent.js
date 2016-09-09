@@ -17,7 +17,7 @@ router.get("/", function(req, res) {
       client.query("SELECT sessionUser.id AS sessionuser_id, bl.status, " +
       "bl.date_initial, bl.date_returned, bl.due_date, " +
       "borrowers.id AS owner_id, borrowers.first_name AS borrower_first_name, borrowers.last_name AS borrower_last_name, " +
-      "borrowers.email, borrowers.username, " +
+      "borrowers.email, " +
       "books.id AS book_id, books.title, books.series, books.author, books.languages, books.published, books.publisher, books.plot, " +
       "ub.locations, ub.favorites, books.isbn13, books.isbn10 " +
       "FROM borrowed_and_lent AS bl " +
