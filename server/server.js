@@ -31,8 +31,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("server/public"));
 
-initializeDB();
-
 //  Passport Configuration
 app.use(session({
   store: new pgSession({
@@ -118,6 +116,8 @@ passport.deserializeUser(function(id, done) {
   }); //  pg.connect
 }); //  passport.deserializeUser
 
+initializeDB();
+
 //  Routers
 app.use("/", index);
 app.use("/register", register);
@@ -144,7 +144,7 @@ app.get("/*", function(req, res) {
 });
 
 
-var server = app.listen(3000, function() {
+var server = app.listen(3000 || process.env.PORT, function() {
   var port = server.address().port;
   console.log("Listening on port", port, ". Ctrl-C to exit.");
 });

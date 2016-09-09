@@ -18,7 +18,7 @@ function initializeDB(){
         process.exit(1);
       } else {
 
-        var books, users, users_books, borrowed_and_lent, wishlist, favorites, shelves, book_shelves;
+        var books, users, users_books, borrowed_and_lent, wishlist, favorites, shelves, book_shelves, session;
 
         books = 'CREATE TABLE IF NOT EXISTS books ( ' +
           'id serial PRIMARY KEY, ' +
@@ -73,7 +73,12 @@ function initializeDB(){
           'book_id INT REFERENCES books(id), ' +
           'shelf_id INT REFERENCES shelves(id));';
 
-        var query = client.query(books + users + users_books + borrowed_and_lent + wishlist + favorites + shelves + book_shelves);
+        session = 'CREATE TABLE IF NOT EXISTS session ( ' +
+        'id VARCHAR NOT NULL PRIMARY KEY, ' +
+        'sess JSON NOT NULL, ' +
+        'expire TIMESTAMP(6) NOT NULL) WITH (OIDS=FALSE);';
+
+        var query = client.query(books + users + users_books + borrowed_and_lent + wishlist + favorites + shelves + book_shelves + session);
 
         query.on('end', function(){
           console.log('Schema creation successful');
