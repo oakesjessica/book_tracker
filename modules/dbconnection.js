@@ -44,9 +44,9 @@ function initializeDB(){
 
         users_books = 'CREATE TABLE IF NOT EXISTS users_books ( ' +
           'id serial PRIMARY KEY, ' +
-          'wishlist BOOLEAN, ' +
+          'wishlist BOOLEAN default FALSE, ' +
           'locations varchar(100), ' +
-          'favorites BOOLEAN, ' +
+          'favorites BOOLEAN default FALSE, ' +
           'book_id INT REFERENCES books(id), ' +
           'user_id INT REFERENCES users(id));';
 
