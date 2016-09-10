@@ -23,7 +23,7 @@ router.post("/", function(req, res) {
 
   pg.connect(connectionString, function(err, client, done) {
     if (err) {
-      console.log(err);
+      console.log("Error connecting to PG search file", err);
       res.status(500).send(err);
     } else {
       client.query("INSERT INTO books (title, author, published, publisher, languages, plot, page_count, img_src, isbn13, isbn10) " +

@@ -9,7 +9,7 @@ router.get("/", function(req, res) {
 
   pg.connect(connectionString, function(err, client, done) {
     if (err) {
-      console.log('Error connecting to PG library', err);
+      console.log('Error connecting to PG library file', err);
       res.status(500).send(err);
     } else {
       client.query("SELECT users_books.id, books.id AS book_id, books.title, books.series, books.author, books.languages, " +
