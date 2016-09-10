@@ -6,57 +6,57 @@ var app = angular.module("bookApp", ["ngRoute", "smart-table"]);
 app.config(["$routeProvider", "$locationProvider", function($routeProvider, $locationProvider) {
   $routeProvider
     .when("/login", {
-      templateUrl: "views/login.html",
+      templateUrl: "views/partials/login.html",
       controller: "LoginController",
       controllerAs: "log"
     })
     .when("/register", {
-      templateUrl: "views/register.html",
+      templateUrl: "views/partials/register.html",
       controller: "RegisterController",
       controllerAs: "reg"
     })
     .when("/search", {
-      templateUrl: "views/search.html",
+      templateUrl: "views/partials/search.html",
       controller: "SearchController",
       controllerAs: "add"
     })  //  Search page
     .when("/library", {
-      templateUrl: "views/library.html",
+      templateUrl: "views/partials/library.html",
       controller: "LibraryController",
       controllerAs: "lib"
     })  //  Library Page
     .when("/shelves", {
-      templateUrl: "views/shelves.html",
+      templateUrl: "views/partials/shelves.html",
       controller: "ShelvesController",
       controllerAs: "shelf"
     })  //  Shelves page
     .when("/locations", {
-      templateUrl: "views/locations.html",
+      templateUrl: "views/partials/locations.html",
       controller: "LocationController",
       controllerAs: "loc"
     })  //  Locations page
     .when("/borrowed", {
-      templateUrl: "views/borrowed.html",
+      templateUrl: "views/partials/borrowed.html",
       controller: "BorrowController",
       controllerAs: "brw"
     })  //  Borrowed page
     .when("/lent", {
-      templateUrl: "views/lent.html",
+      templateUrl: "views/partials/lent.html",
       controller: "LentController",
       controllerAs: "lent"
     })  //  Lent page
     .when("/favorites", {
-      templateUrl: "views/favorites.html",
+      templateUrl: "views/partials/favorites.html",
       controller: "FavoriteController",
       controllerAs: "fav"
     })  //  Favorites page
     .when("/wishlist", {
-      templateUrl: "views/wishlist.html",
+      templateUrl: "views/partials/wishlist.html",
       controller: "WishController",
       controllerAs: "wish"
     }) //  Wishlist page
     .when("/faq", {
-      templateUrl: "views/faq.html",
+      templateUrl: "views/partials/faq.html",
       controller: "FaqController",
       controllerAs: "faq"
     });
