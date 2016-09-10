@@ -1,4 +1,4 @@
-//  LOGIN ROUTER
+// server/routes/login.js
 var router = require("express").Router();
 var path = require("path");
 

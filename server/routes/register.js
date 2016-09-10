@@ -1,4 +1,4 @@
-//  REGISTER ROUTER
+// server/routes/register.js
 var router = require("express").Router();
 var passport = require("passport");
 var path = require("path");

@@ -1,4 +1,4 @@
-//  BORROWED ROUTER
+// server/routes/borrowed.js
 var router = require("express").Router();
 var pg = require("pg");
 

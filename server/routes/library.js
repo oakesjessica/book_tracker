@@ -1,3 +1,4 @@
+// server/routes/library.js
 var router = require("express").Router();
 var pg = require("pg");
 
@@ -8,10 +9,9 @@ router.get("/", function(req, res) {
 
   pg.connect(connectionString, function(err, client, done) {
     if (err) {
-      console.log(err);
+      console.log('Error connecting to PG library', err);
       res.status(500).send(err);
     } else {
-      var results = [];
       client.query("SELECT users_books.id, books.id AS book_id, books.title, books.series, books.author, books.languages, " +
       "books.published, books.publisher, books.plot, books.img_src, books.isbn13, books.isbn10, " +
       "users_books.locations, users_books.favorites, " +

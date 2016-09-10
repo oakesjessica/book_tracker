@@ -1,4 +1,4 @@
-//  SHELVES ROUTER
+// server/routes/shelves.js
 var router = require("express").Router();
 var pg = require("pg");
 

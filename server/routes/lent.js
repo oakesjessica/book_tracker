@@ -1,4 +1,4 @@
-//  LENT ROUTER
+// server/routes/lent.js
 var router = require("express").Router();
 var pg = require("pg");
 

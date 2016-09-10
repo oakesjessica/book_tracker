@@ -1,4 +1,4 @@
-//  LOCATIONS ROUTER
+// server/routes/locations.js
 var router = require("express").Router();
 var pg = require("pg");
 
