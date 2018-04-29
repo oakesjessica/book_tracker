@@ -1,5 +1,5 @@
 # Book Tracker
-This application was created as a two week individual project at Prime Digital Academy as part of its curriculum. Book Tracker utilizes the Google Books API to allow the user to search for books in a myriad of languages to add to their own personal library or mark it as a wishlist item. They can view the book's information in a table on their library dashboard where they can star a book as 'favorite'. They can also view their favorite books or wishlist books separately. This app utilizes REST architecture where users can get, add, edit, and delete books.
+This application was created as a two week individual project at Prime Digital Academy as part of its curriculum. Book Tracker allows users to keep track and manage all of their books. This app utilizes the Google Books API to allow the user to search for books in a myriad of languages to add to their own personal library or mark it as a wishlist item. They can view the book's information in a table on their library dashboard where they can star a book as 'favorite'. They can also view their favorite books or wishlist books separately. This app utilizes REST architecture where users can get, add, edit, and delete books.
 
 
 ## Tech Used
